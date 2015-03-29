@@ -1,0 +1,408 @@
+body {
+	margin: 0;
+	padding: 0;
+	line-height: 1.5em;
+	font-family: Verdana, Arial, san-serif;
+	font-size: 11px;
+	color: #ffffff;
+	background: #4b4743;
+}
+
+a:link, a:visited { color: #e6e154; text-decoration: none; font-weight: bold;} 
+a:active, a:hover { color: #e6e154; text-decoration: underline;}
+
+p {
+	margin: 0px;
+	padding: 0px;
+}
+
+img {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+}
+
+
+.cleaner {
+	clear: both;
+	width: 100%;
+	height: 1px;
+	font-size: 1px;	
+}
+
+.cleaner_with_height {
+	clear: both;
+	width: 100%;
+	height: 30px;
+	font-size: 1px;	
+}
+
+.cleaner_with_width {
+	float: left;
+	width: 20px;
+	height: 30px;
+	font-size: 1px;	
+}
+
+.kupi a{
+	clear: both;
+	text-align: center;
+	display: block;
+	width: 100px;
+	margin-bottom: 10px;
+	padding: 4px 0 5px 0;
+	background: url(Slike/kupi.jpg) no-repeat;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.detaljnije a{
+	clear: both;
+	text-align: center;
+	display: block;
+	width: 100px;
+	margin-bottom: 10px; 
+	padding: 4px 0 5px 0;
+	background: url(Slike/detaljnije.jpg) no-repeat;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#kompletna{
+	width: 960px;
+	margin: 0 auto;
+	padding: 0 10px;
+	background: #1c1c1b url(Slike/pozadina.jpg) repeat-y;
+}
+
+/* menu */
+
+#menu {
+	clear: both;
+	width: 960px;
+	height: 80px;
+	background: url(Slike/menu_pozadina.jpg) no-repeat;
+	background-size: 960px 80px;
+}
+
+#menu ul {
+	padding: 13px 0 0 0;
+	margin: 0;
+	list-style: none;
+}
+
+#menu ul li{
+	display: inline;
+}
+
+#menu img{
+float: left;
+margin-top: 5px;
+margin-left: 15px;
+margin-bottom: 5px;
+margin-right: 20px;
+width: 220px;
+height: 70px;
+}
+
+#menu ul li a{
+	float: left;
+	padding: 16 20px;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	color: #969547;
+}
+
+#menu li a:hover, #menu li .trenutna{
+	color: #fcf88e;
+}
+
+#header #ex a img{
+height: 35px;
+width:35px;
+}
+
+#header #ex{
+padding-top:220px;
+margin-left:20px;
+}
+
+/* header */
+
+#header {
+	clear: both;
+	width: 960px;
+	height: 285px;
+	padding: 0;
+	margin: 0;
+	background: url(Slike/Tabla.jpg) no-repeat;
+}
+
+
+
+#header a,a:hover {
+	color: #ffffff;
+}
+
+
+#header #Popust {
+	float: left;
+	font-size: 14px;	
+	margin-top: 95px;
+	margin-left: 490px;
+	width: 180px;
+}
+
+
+#Popust a {
+	font-size: 12px;
+	margin-left: 50px;
+}
+
+#Popust  p {
+	margin: 0 0 20px 0;
+}
+#Popust p span {
+	font-size: 18px;
+}
+
+#header #Nove_knjige {
+	float: left;
+	margin-top: 90px;
+	font-size: 12px;	
+	margin-left: 55px;
+	width: 180px;
+}
+
+#Nove_knjige ul {
+	 margin: 0 0 10px 0;
+	 padding: 0 0 0 20px;
+}
+
+#Nove_knjige ul li {
+	 margin: 0;
+	 padding: 0; 
+}
+
+#Nove_knjige a{
+margin-left:50px;
+}
+
+/* sadrzaj */
+
+/* Lijevo */
+
+#Sadrzaj {
+	clear: both;
+	width: 920px;
+	padding: 0 20px;
+}
+
+#Sadrzaj #Sadrzaj_lijevo {
+	float: left;
+	width: 188px;
+	padding: 10px;
+	background-color: #171716;
+	border: 1px solid #212120;
+}
+
+#Sadrzaj #Sadrzaj_desni {
+	float: right;
+	width: 670px;
+}
+
+
+#Sadrzaj_lijevo .Sadrzaj_lijevi_dio{
+	clear: both;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #2b2b2a;
+	margin-bottom: 20px;
+}
+
+.Sadrzaj_lijevi_dio h1 {
+	font-size: 14px;
+	color: #cbc750;
+	padding: 0 0 5px 0;
+	margin: 0 0 10px 0;
+	border-bottom: 1px dotted #cbc750;
+}
+
+.Sadrzaj_lijevi_dio ul {
+	padding: 0;
+	margin: 0;
+}
+
+.Sadrzaj_lijevi_dio ul li{
+	padding: 0 0 3px 10px;	
+	list-style: none;
+}
+
+.Sadrzaj_lijevi_dio ul li a{
+	font-weight: normal;
+	text-decoration: none;
+	color: #969547;
+}
+
+.Sadrzaj_lijevi_dio li a:hover, .Sadrzaj_lijevi_dio li .trenutna{
+	color: #fcf88e;
+}
+
+/* desno */
+
+#Sadrzaj_desni .Ponuda {
+	float: left;
+	width: 303px;
+	height: 280px;
+	padding: 10px;
+	border: 1px solid #333;
+}
+
+#Sadrzaj_desni h1 {
+	padding: 10px;
+	margin: 0 0 20px 0;
+	font-size: 15px;
+	color: #cbc750;
+	background: url(Slike/header_pozadina.jpg);
+}
+
+#Sadrzaj_desni h2 {
+	padding: 0 0 0 0;
+	margin: 0 0 20px 0;
+	font-size: 12px;
+	color: #e6e154;
+}
+
+#Sadrzaj_desni h3 {
+	padding: 0;
+	margin: 0 0 20px 0;
+	font-size: 18px;
+	color: #85391f;
+}
+
+#Sadrzaj_desni ul {
+	margin: 0 0 20px 0;
+	padding: 0 0 0 20px;
+	list-style: none;
+}
+
+#Sadrzaj_desni li {
+	padding: 0 0 3px 0;
+}
+
+#Sadrzaj_desni .image_panel {
+	float: left;
+	width: 100px;
+	margin-right: 20px;
+}
+
+#Sadrzaj_desni p {
+	text-align: justify;
+	padding: 0 0 8px 0;
+}
+
+#Sadrzaj_desni datum p{
+float:left;
+}
+
+.Ponuda h1 span {
+	font-weight: normal;
+}
+
+.Ponuda img {
+	float: left;
+	margin-right: 20px;
+	height: 160;
+	width: 103;
+}
+
+.Ponuda .ukratko {
+	float: left;
+	width: 180px;
+}
+
+.ukratko p {
+	margin-bottom: 15px;
+}
+
+#Sadrzaj_desni #stranice ul li{
+
+display: inline;
+
+}
+
+#Sadrzaj_desni #stranice ul {
+	list-style: none;
+	margin-left: 242px;
+}
+
+#Sadrzaj_desni #stranice ul li a{
+	float: left;
+	padding: 20 20px;
+	margin-top:10px;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	color: #969547;
+}
+
+#Sadrzaj_desni #stranice li a:hover, #Sadrzaj_desni #stranice li .trenutna{
+	color: #fcf88e;
+}
+
+table , td{
+font-size: 14px;
+border-collapse: collapse;
+padding: 5 5 5 5;
+border: 1px solid white;
+text-align:center;
+}
+
+#Sadrzaj_desni table tr td a{
+color: #FFFFFF;
+}
+table caption{
+margin-bottom: 10px;
+font-size: 20px;
+}
+
+
+th{
+font-size:16px;
+background: url(Slike/menu_pozadina.jpg) no-repeat;
+border: 1px solid white;
+padding: 5 5 5 5;
+color: white;
+}
+
+#Sadrzaj_desni #neki h1{
+font-size:20px;
+}
+
+#Sadrzaj_desni #neki p{
+font-size:14px;
+
+}
+
+
+
+
+/* footer */
+#footer {
+	clear: both;
+	width: 960px;
+	padding: 20px 0px 20px 0;
+	text-align: center;
+	border-top: 1px solid #25211e;
+	color: #999;
+	background-color: #111110;
+}
+
+#footer a{
+	color: #fff;
+	font-weight: normal;
+}
