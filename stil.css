@@ -120,7 +120,7 @@ height: 70px;
 
 #menu ul li a{
 	float: left;
-	padding: 16 16 12 20px;
+	padding: 16px 16px 12px 20px;
 	font-size: 15px;
 	font-weight: bold;
 	text-align: center;
@@ -145,7 +145,7 @@ height: 70px;
 
 #padajuci a{
 	width: 87px;
-	padding: 10 0 10 0px;
+	padding: 10px 0 10px 0;
 	background: url(Slike/menu_pozadina.jpg) no-repeat;
 	background-size: 960px 80px;
 	border-top: 1px solid #969547;
@@ -349,8 +349,8 @@ float:left;
 .Ponuda img {
 	float: left;
 	margin-right: 20px;
-	height: 160;
-	width: 103;
+	height: 160px;
+	width: 103px;
 }
 
 .Ponuda .ukratko {
@@ -375,7 +375,7 @@ display: inline;
 
 #Sadrzaj_desni #stranice ul li a{
 	float: left;
-	padding: 20 20px;
+	padding: 20px 20px;
 	margin-top:10px;
 	font-size: 12px;
 	font-weight: bold;
@@ -391,7 +391,7 @@ display: inline;
 table , td{
 font-size: 14px;
 border-collapse: collapse;
-padding: 5 5 5 5;
+padding: 5px 5px 5px 5px;
 border: 1px solid white;
 text-align:center;
 }
@@ -409,7 +409,7 @@ th{
 font-size:16px;
 background: url(Slike/menu_pozadina.jpg) no-repeat;
 border: 1px solid white;
-padding: 5 5 5 5;
+padding: 5px 5px 5px 5px;
 color: white;
 }
 
