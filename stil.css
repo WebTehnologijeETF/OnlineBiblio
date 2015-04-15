@@ -95,6 +95,17 @@ img {
 
 #menu ul li{
 	display: inline;
+	list-style: none;
+	float: left;
+}
+
+#menu ul li img{
+width: 10px;
+height: 10px;
+float: right;
+margin-left: 5px;
+margin-right: 0px;
+margin-bottom:0px;
 }
 
 #menu img{
@@ -109,7 +120,7 @@ height: 70px;
 
 #menu ul li a{
 	float: left;
-	padding: 16 20px;
+	padding: 16 16 12 20px;
 	font-size: 15px;
 	font-weight: bold;
 	text-align: center;
@@ -121,6 +132,31 @@ height: 70px;
 	color: #fcf88e;
 }
 
+/* padajuci */
+
+#padajuci{
+	width: 87px;
+	margin-top: 45px;
+	position: absolute;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+#padajuci a{
+	width: 87px;
+	padding: 10 0 10 0px;
+	background: url(Slike/menu_pozadina.jpg) no-repeat;
+	background-size: 960px 80px;
+	border-top: 1px solid #969547;
+}
+
+#padajuci a:hover {
+	background: #4b4743;
+}
+
+/* header */
+
 #header #ex a img{
 height: 35px;
 width:35px;
@@ -130,8 +166,6 @@ width:35px;
 padding-top:220px;
 margin-left:20px;
 }
-
-/* header */
 
 #header {
 	clear: both;
@@ -388,8 +422,34 @@ font-size:14px;
 
 }
 
+#Sadrzaj_desni .Forma #Kod{
+width:200px;
+height:100px;
+position: absolute;
+margin-left: 200px;
+margin-top: -60px;
+}
 
+.Greska{
+width:20px;
+height:20px;
+position: absolute;
+padding-left:5px;
+visibility: hidden;
+}
 
+.Forma input{
+border-style: solid;
+border-color: transparent;
+width: 170px;
+}
+
+.Forma textarea{
+
+height: 70px;
+border-style: solid;
+border-color: transparent;
+}
 
 /* footer */
 #footer {
