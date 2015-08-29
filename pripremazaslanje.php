@@ -69,7 +69,7 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="ex">
+											<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
