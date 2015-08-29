@@ -25,15 +25,15 @@ img {
 
 .cleaner {
 	clear: both;
-	width: 100%;
+	width: 30%;
 	height: 1px;
 	font-size: 1px;	
 }
 
 .cleaner_with_height {
-	clear: both;
-	width: 100%;
-	height: 30px;
+	clear:both;
+	width: 30%;
+	height: 10px;
 	font-size: 1px;	
 }
 
@@ -68,6 +68,7 @@ img {
 	color: #FFFFFF;
 	font-weight: bold;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 #kompletna{
@@ -126,11 +127,13 @@ height: 70px;
 	text-align: center;
 	text-decoration: none;
 	color: #969547;
+	cursor: pointer;
 }
 
 #menu li a:hover, #menu li .trenutna{
 	color: #fcf88e;
 }
+
 
 /* padajuci */
 
@@ -153,6 +156,25 @@ height: 70px;
 
 #padajuci a:hover {
 	background: #4b4743;
+}
+
+#padajucipodmenu{
+	width: 87px;
+	margin-top: 0px;
+	position: absolute;
+	margin-left: 123px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+#padajuci ul li img
+{
+width: 10px;
+height: 10px;
+float: right;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom:0px;
 }
 
 /* header */
@@ -287,13 +309,28 @@ margin-left:50px;
 
 /* desno */
 
-#Sadrzaj_desni .Ponuda {
-	float: left;
+#Sadrzaj_desni .Ponuda{ 
+	float:left;
 	width: 303px;
-	height: 280px;
+	height:auto;
 	padding: 10px;
-	border: 1px solid #333;
+	outline: 1px solid #333;
+	margin-bottom:30px;
 }
+
+#Novosti_lijevo{
+float:left;
+width:100px;
+height:auto;
+
+}
+
+#Novosti_desno{
+margin-left:335px;
+width:100px;
+height:auto;
+}
+
 
 #Sadrzaj_desni h1 {
 	padding: 10px;
@@ -338,8 +375,10 @@ margin-left:50px;
 	padding: 0 0 8px 0;
 }
 
-#Sadrzaj_desni datum p{
+#datumObjave
+{
 float:left;
+margin: 0px 0px -10px 0px;
 }
 
 .Ponuda h1 span {
@@ -388,6 +427,11 @@ display: inline;
 	color: #fcf88e;
 }
 
+table{
+margin-top: 20px;
+margin-bottom: 50px;
+}
+
 table , td{
 font-size: 14px;
 border-collapse: collapse;
@@ -399,6 +443,7 @@ text-align:center;
 #Sadrzaj_desni table tr td a{
 color: #FFFFFF;
 }
+
 table caption{
 margin-bottom: 10px;
 font-size: 20px;
@@ -419,15 +464,14 @@ font-size:20px;
 
 #Sadrzaj_desni #neki p{
 font-size:14px;
-
 }
 
 #Sadrzaj_desni .Forma #Kod{
-width:200px;
+width:220px;
 height:100px;
 position: absolute;
-margin-left: 200px;
-margin-top: -60px;
+margin-left: 202px;
+margin-top: -20px;
 }
 
 .Greska{
@@ -436,6 +480,70 @@ height:20px;
 position: absolute;
 padding-left:5px;
 visibility: hidden;
+}
+
+#errorIme{
+width:20px;
+height:20px;
+position: absolute;
+margin-left:-32px;
+visibility: hidden;
+}
+
+.Forma ul li{
+display: inline;
+list-style:none;
+margin-right:170px;
+}
+
+#Sadrzaj_desni .Forma ul{
+padding-left:0px;
+margin-bottom:-10px;
+}
+
+#ime{
+margin-right:28px;
+}
+
+#prezime{
+margin-right:28px;
+}
+
+#nazivknjige{
+margin-right:95px;
+}
+#zanrknjige{
+margin-right:140px;
+}
+
+#cijenaknjige{
+margin-left:-105px;
+}
+
+#tabela td img{
+width:100px;
+height:75px;
+}
+
+#druginiz li{
+display: inline;
+list-style:none;
+margin-right:148px;
+}
+
+#formaTabele
+{
+margin-left:80px;
+}
+
+#pomocniniz1 li{
+display: inline;
+list-style:none;
+}
+
+#pomocniniz2 li{
+display: inline;
+list-style:none;
 }
 
 .Forma input{

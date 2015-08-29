@@ -10,7 +10,7 @@
 	<div id="menu">
 	<a onclick="loadPage('pocetna.html')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a  onclick="loadPage('pocetna.html')">Naslovna</a></li>
+            <li><a  onclick="loadPage('pocetna.html')" class="trenutna">Naslovna</a></li>
             <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
 				<a onclick="loadPage('knjige.html')">Roman</a>
@@ -33,13 +33,14 @@
 				<a onclick="loadPage('knjige.html')">Naučna Fantastika</a>
 			</div>
 			</li>
-            <li><a onclick="loadPage('knjige.html')" class="trenutna">Knjige</a></li>            
+            <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
+	
 		<div id="Popust">
 			<p>
                 <span>30%</span> popusta na kupovinu veću od 100 KM!
@@ -53,7 +54,7 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-											<div id="ex">
+				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
@@ -95,78 +96,26 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-			
-        	<div class="Ponuda">
-            	<h1>Oliver Twist <span>(by  C.Dickens)</span></h1>
-   	      <img src="Slike/twist.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>U romanu “Oliver Twist” prikuje se život i potresna sudbina Olivera Twista, siromašnog dječaka koji je prilikom rođenja ostao bez majke...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-            
-            <div class="cleaner_with_width">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Anna Karenina <span>(by L.Tolstoy)</span></h1>
-   	      <img src="Slike/anna.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Radnja romana L. N. Tolstoja smještena je u sedamdesete godine 19. stoljeća u Rusiji, a bez obzira što se svi likovi kreću u istoj sredini...</p>
-                  <h3>25 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-			
-			<div class="cleaner_with_height">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Dracula <span>(by B.Stoker)</span></h1>
-   	      <img src="Slike/dracula.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Radnja se događa u Transilvaniji i Engleskoj, a glavni je lik grof Drakula. Jonathan Harker, odvjetnik, dolazi iz Engleske...</p>
-                  <h3>20 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-            
-            <div class="cleaner_with_width">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Orkanski visovi <span>(by E.Brontë)</span></h1>
-   	      <img src="Slike/orkanski.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Priča o Hitklifu,detetu nepoznatih roditelja i zagonetnog porekla, te njegovoj tragičnoj ljubavi sa Ketrin Ernšo, postala...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-			
-						<div id="stranice">
-			<ul>
-			<li><a onclick="loadPage('knjige.html')"  class="trenutna">1</a></li>
-			<li><a onclick="loadPage('knjige2.html')">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">...</a></li>
-			</ul>
-			</div>
-			
+		<div class =  "detaljnaNovost" id = "detaljnaNovost">
+			 <?php 
+				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
+				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
+				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
+				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
+				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
+				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
+				echo '<img src = "'.$slika.'" alt="Smiley face" ><br>
+				<div class = "detaljnaNovost">'.$dateTime.'<br>'.$autor.'<br>'.$naslov.'<br>'.$opis.'<br>'.$detOpis.'</div>';
+			?>
+		</div>
 	</div>
     </div>
 	<div id="footer">
 	       <a href="pocetna.html">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
-<script src="prikaziMenu.js"></script>
-<script src="ucitavanjeStranice.js"></script>
-</div> <!-- Kraj svega -->
+	<script type="text/javascript" src="prikaziMenu.js"></script>
+	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
+	</div><!-- Kraj svega -->
 </BODY>
 </HTML>

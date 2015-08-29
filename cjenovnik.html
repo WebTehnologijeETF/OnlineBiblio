@@ -5,36 +5,42 @@
 <link href="stil.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </HEAD>
-<BODY>
+<BODY onload="dodajTabelu();">
 <div id="kompletna">
 	<div id="menu">
-	<a href="pocetna.html"><img src="Slike/logo.jpg" alt="image"></a>
+	<a onclick="loadPage('pocetna.html')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a href="pocetna.html">Naslovna</a></li>
-            <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a href="#">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
+            <li><a  onclick="loadPage('pocetna.html')">Naslovna</a></li>
+            <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
-				<a href="#">Roman</a>
-				<a href="#">Drama</a>
-				<a href="#">Film</a>
-				<a href="#">Triler</a>
-				<a href="#">Historijski</a>
-				<a href="#">Ljubavni</a>
-				<a href="#">Muzika</a>
-				<a href="#">Priče</a>
-				<a href="#">Horor</a>
-				<a href="#">Biografija</a>
-				<a href="#">Fantastika</a>
-				<a href="#">Naučna Fantastika</a>
+				<a onclick="loadPage('knjige.html')">Roman</a>
+				<a onclick="loadPage('knjige.html')">Drama</a>
+				<a onclick="loadPage('knjige.html')">Film</a>
+				<a onclick="loadPage('knjige.html')">Triler</a>
+				<ul><li id="strelicadesno" onmouseover="prikaziPodMenu();" onmouseout="sakrijPodMenu();"><a onclick="loadPage('knjige.html')">Historijski<img src="Slike/strelica2.jpg" alt="image"></a>
+				<div id="padajucipodmenu">
+				<a onclick="loadPage('knjige.html')">Istiniti</a>
+				<a onclick="loadPage('knjige.html')">Fikcija</a>
+				</div>
+				</li>
+				</ul>
+				<a onclick="loadPage('knjige.html')">Ljubavni</a>
+				<a onclick="loadPage('knjige.html')">Muzika</a>
+				<a onclick="loadPage('knjige.html')">Priče</a>
+				<a onclick="loadPage('knjige.html')">Horor</a>
+				<a onclick="loadPage('knjige.html')">Biografija</a>
+				<a onclick="loadPage('knjige.html')">Fantastika</a>
+				<a onclick="loadPage('knjige.html')">Naučna Fantastika</a>
 			</div>
 			</li>
-            <li><a href="knjige.html">Knjige</a></li>            
-            <li><a href="nova.html">Nova izdanja</a></li>  
-            <li><a href="cjenovnik.html" class="trenutna">Cjenovnik</a></li> 
-            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
+            <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
+            <li><a onclick="loadPage('cjenovnik.html')" class="trenutna">Cjenovnik</a></li> 
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
-		<div id="Popust">
+		<div onmousemove="ucitajtabelu();"id="Popust">
 			<p>
                 <span>30%</span> popusta na kupovinu veću od 100 KM!
         	</p>
@@ -89,90 +95,91 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-	<table> 
+		<div id="formaTabele" class="Forma"> 
+		<ul id="pomocniniz1">
+		<li id="nazivknjige">Naziv knjige:</li>
+		<li id="zanrknjige">Žanr:</li>
+		<li>ID:</li>
+		</ul><br>
+		<input type="text" name="naziv" id="naziv" class="input" />
+		<input type="text" name="opis" id="opis" class="input"/>
+		<input type="text" name="id" id="id" class="input" />
+		<ul id="pomocniniz2">
+		<li >Slika(URL dodati):</li>
+		<li id="cijenaknjige">Cijena:</li>
+		</ul><br>
+		<input type="text" name="slika" id="slika" class="input" />	
+		<input type="text" name="cijena" id="cijena" class="input" />		
+		<p>
+		<br>
+		<br>
+		<input type="submit" value="Postavi" onclick="dodajProizvod(); dodajTabelu();"/> 
+		<input type="reset" value="Izmijeni" onclick="izmijeniProizvod(); dodajTabelu();"/>
+		<input type="reset" value="Obrisi" onclick="obrisiProizvod(); dodajTabelu();"/> 
+		</div>
+	<table id="tabela"> 
 	<caption>Cjenovnik</caption>
 		<tr>
 			<th>Šifra</th>
 			<th>Žanr</th>
 			<th>Naziv knjige</th>
-			<th>Pisac</th>
+			<th>Slika</th>
 			<th>Cijena</th>
 		</tr>
 		<tr>
 			<td>01</td>
 			<td>Fantastika</td>
 			<td><a href="#">Gospodar prstenova: Prstenova družina</a></td>
-			<td>J. R. R. Tolkien</td>
+			<td>Da</td>
 			<td>15 KM</td>
 		</tr>
 		<tr>
 			<td>02</td>
 			<td>Fantastika</td>
 			<td><a href="#">Gospodar prstenova: Dvije kule</a></td>
-			<td>J. R. R. Tolkien</td>
+			<td>Da</td>
 			<td>15 KM</td>
 		</tr>
 		<tr>
 			<td>03</td>
 			<td>Fantastika</td>
 			<td><a href="#">Gospodar prstenova: Povratak kralja</a></td>
-			<td>J. R. R. Tolkien</td>
+			<td>Da</td>
 			<td>15 KM</td>
 		</tr>
 		<tr>
 			<td>04</td>
 			<td>Fantastika</td>
 			<td><a href="#">Hobit</a></td>
-			<td>J. R. R. Tolkien</td>
+			<td>Da</td>
 			<td>15 KM</td>
 		</tr>
 		<tr>
 			<td>05</td>
 			<td>Gotska novela</td>
 			<td><a href="#">Orkanski visovi</a></td>
-			<td>Emily Brontë</td>
+			<td>Da</td>
 			<td>15 KM</td>
 		</tr>
 		<tr>
 			<td>06</td>
 			<td>Horor, Gotika</td>
 			<td><a href="#">Drakula</a></td>
-			<td>Bram Stoker</td>
+			<td>Da</td>
 			<td>20 KM</td>
 		</tr>
 		<tr>
 			<td>07</td>
 			<td>Historijska novela, Avantura</td>
 			<td><a href="#">Grof Monte Kristo</a></td>
-			<td>Alexandre Dumas</td>
+			<td>Da</td>
 			<td>20 KM</td>
 		</tr>
 		<tr>
 			<td>08</td>
 			<td>Historijska fikcija, Fantastika</td>
 			<td><a href="#">Oliver Twist</a></td>
-			<td>Charles Dickens</td>
-			<td>15 KM</td>
-		</tr>
-		<tr>
-			<td>09</td>
-			<td>Novela, Literalni realizam</td>
-			<td><a href="#">Anna Karenina</a></td>
-			<td>Leo Tolstoy</td>
-			<td>25 KM</td>
-		</tr>
-		<tr>
-			<td>10</td>
-			<td>Fantastika</td>
-			<td><a href="#">Harry Potter i Kamen mudraca</a></td>
-			<td>J.R. Rowling</td>
-			<td>15 KM</td>
-		</tr>
-		<tr>
-			<td>11</td>
-			<td>Fantastika</td>
-			<td><a href="#">Harry Potter i Vatreni pehar</a></td>
-			<td>J.R. Rowling</td>
+			<td>Da</td>
 			<td>15 KM</td>
 		</tr>
 	</table>
@@ -183,6 +190,8 @@
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
 <script src="prikaziMenu.js"></script>
+<script src="dodavanjeTabele.js"></script>
+<script src="ucitavanjeStranice.js"></script>
 </div> <!-- Kraj svega -->
 </BODY>
 </HTML>
