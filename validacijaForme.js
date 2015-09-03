@@ -9,12 +9,14 @@ var Ime = document.getElementById('ime');
 var Email = document.getElementById('email');
 var kodSlike = document.getElementById('kodslike');
 var kodSlike1 = document.getElementById('kodslike1');
+var upomoc=0;
 
 if(Ime.value=="" || Ime.value==null){
 
 imeslika.style.visibility = 'visible';
 Ime.style.borderColor = "red";
 alert("Niste unijeli vase ime!");
+return;
 
 }
 else {
@@ -29,6 +31,7 @@ emailslika.style.visibility = 'visible';
 Email.style.borderColor = "red";
 if(Ime.value != ""){
 alert("Niste unijeli vas email!");
+return;
 }
 
 }
@@ -51,6 +54,7 @@ Email.style.borderColor = "red";
 if(Ime.value != ""){
 
 alert("Niste unijeli ispravnu email adresu!");
+return;
 }
 
 }
@@ -73,6 +77,7 @@ if(Ime.value != ""){
 if(Email.value!="")
 {
 alert("Niste unijeli kod!");
+return;
 }
 }
 
@@ -116,6 +121,7 @@ if(Ime.value != ""){
 if(Email.value!="")
 {
 alert("Kodovi vam se ne poklapaju!");
+return;
 }
 }
 }
@@ -133,7 +139,60 @@ if(Ime.value != ""){
 if(Email.value!="")
 {
 alert("Niste unijeli tacno kod sa slike!");
+return;
 }
 }
 }
+}
+
+if(upomoc==1){
+var Opcina = document.getElementById('opcina').value;
+
+var Mjesto = document.getElementById('mjesto').value;
+
+
+var pomocniServis = "http://zamger.etf.unsa.ba/wt/mjesto_opcina.php?opcina=" + Opcina + "&mjesto=" + Mjesto;
+
+
+if (Mjesto.length == 0 || Mjesto==null) {
+  
+      alert("Niste unijeli vase mjesto!");
+    }
+    
+else if (Opcina.length == 0 || Opcina==null) {
+        
+	alert("Niste unijeli vasu opcinu!");  
+    }   
+else
+{
+   
+
+var x = new XMLHttpRequest();
+
+x.onreadystatechange = function () {
+        
+if (x.readyState == 4 && x.status == 200) {
+            
+	var o = JSON.parse(x.responseText);
+
+	if (o.hasOwnProperty('greska')) {                
+                
+	alert(o.greska);
+            
+		}
+        
+		}
+        
+if (x.readyState == 4 && x.status == 404)
+ 
+alert("Error 404!");  
+}
+   
+ 	x.open("GET", pomocniServis, true);
+    
+	x.send();   
+} 
+
+}
+
 }
