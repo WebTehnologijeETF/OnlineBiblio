@@ -10,7 +10,7 @@
 	<div id="menu">
 	<a onclick="loadPage('index.php')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a  onclick="loadPage('index.php')">Naslovna</a></li>
+            <li><a  onclick="loadPage('index.php')" class="trenutna">Naslovna</a></li>
             <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
 				<a onclick="loadPage('knjige.html')">Roman</a>
@@ -34,12 +34,13 @@
 			</div>
 			</li>
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
-            <li><a onclick="loadPage('nova.html')" class="trenutna">Nova izdanja</a></li>  
+            <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
+	
 		<div id="Popust">
 			<p>
                 <span>30%</span> popusta na kupovinu veću od 100 KM!
@@ -53,7 +54,7 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-											<div id="ex">
+				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
@@ -95,79 +96,27 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-			
-        	<div class="Ponuda">
-            	<h1>Harry Potter i Kamen mudraca <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/mudrac.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Na početku priče, 1. studenog 1981., čarobnjak i vještica, Albus Dumbledore i Minerva McGonagall, se sreću...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-            
-            <div class="cleaner_with_width">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Harry Potter i Odaja tajni <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/odaja.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Harry provodi još jedne ljetne praznike kod Dursleyjevih. U Kalinin prilaz dolazi kućni vilenjak Dobby...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-			
-			<div class="cleaner_with_height">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Harry Potter i zatvorenik Askabana <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/zatvorenik.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Priča počinje na Hari Poterov rođendan, 31. jula. Tog jutra Hari na televiziji čuje da je ozloglašeni kriminalac...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-            
-            <div class="cleaner_with_width">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Harry Potter i Vatreni pehar <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/pehar.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Radnja knjige počinje u jednoj kući u kojoj su živjeli Ridlovi. Njihova kućna pomoćnica ih je vidjela mrtve u ...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-			
-			
-			<div id="stranice">
-			<ul>
-			<li><a href="nova.html" class="trenutna">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">...</a></li>
-			</ul>
-			</div>
-			
+		<div class =  "detaljnaNovost" id = "detaljnaNovost">
+			 <?php 
+				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
+				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
+				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
+				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
+				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
+				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
+				echo '<h1>'.$naslov.'</h1>
+				<img src = "'.$slika.'" alt="Smiley face" >
+				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
+			?>
+		</div>
 	</div>
     </div>
 	<div id="footer">
-	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.php">Kontakt</a><br />
+	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
-<script src="prikaziMenu.js"></script>
-<script src="ucitavanjeStranice.js"></script>
-</div> <!-- Kraj svega -->
+	<script type="text/javascript" src="prikaziMenu.js"></script>
+	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
+	</div><!-- Kraj svega -->
 </BODY>
 </HTML>

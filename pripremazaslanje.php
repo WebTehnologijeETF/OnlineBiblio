@@ -1,3 +1,19 @@
+<?php
+    
+	      function test_input($data) 
+      {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+      }
+	  
+	$ime = test_input($_POST["ime"]);
+    $prezime = test_input($_POST["prezime"]);
+    $email = test_input($_POST["email"]);
+    $poruka = test_input($_POST["poruka"]);
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -34,9 +50,9 @@
 			</div>
 			</li>
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
-            <li><a onclick="loadPage('nova.html')" class="trenutna">Nova izdanja</a></li>  
+            <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')"  class="trenutna">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -95,78 +111,78 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
+		<div id="neki">
+		<h1>Kontakt</h1>
+		<p>
+			<h2>Provjerite da li ste ispravno popunili kontakt formu.</h2>
 			
-        	<div class="Ponuda">
-            	<h1>Harry Potter i Kamen mudraca <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/mudrac.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Na početku priče, 1. studenog 1981., čarobnjak i vještica, Albus Dumbledore i Minerva McGonagall, se sreću...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-            
-            <div class="cleaner_with_width">&nbsp;</div>
+			<form name="PrikazForma" action="posaljiMail.php" method="post">
 			
-			<div class="Ponuda">
-            	<h1>Harry Potter i Odaja tajni <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/odaja.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Harry provodi još jedne ljetne praznike kod Dursleyjevih. U Kalinin prilaz dolazi kućni vilenjak Dobby...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
+			<p>Ime: <?php echo $ime?></p><br>
+            <p>Prezime: <?php echo $prezime?></p><br>
+            <p>Email: <?php echo $email?></p><br>
+            <p>Poruka: <?php echo $poruka?></p><br>
+			<h2>Da li ste sigurni da želite poslati ove podatke?</h2>
 			
-			<div class="cleaner_with_height">&nbsp;</div>
+			<input type="submit" value="Siguran sam"/>
+			</form>
+			<br>
 			
-			<div class="Ponuda">
-            	<h1>Harry Potter i zatvorenik Askabana <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/zatvorenik.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Priča počinje na Hari Poterov rođendan, 31. jula. Tog jutra Hari na televiziji čuje da je ozloglašeni kriminalac...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-            
-            <div class="cleaner_with_width">&nbsp;</div>
-			
-			<div class="Ponuda">
-            	<h1>Harry Potter i Vatreni pehar <span>(by J.K.R.)</span></h1>
-   	      <img src="Slike/pehar.jpg" alt="image" />
-                <div class="ukratko">
-                	<p>Radnja knjige počinje u jednoj kući u kojoj su živjeli Ridlovi. Njihova kućna pomoćnica ih je vidjela mrtve u ...</p>
-                  <h3>15 KM</h3>
-                    <div class="kupi"><a href="#">Kupi</a></div>
-                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
-                </div>
-                <div class="cleaner">&nbsp;</div>
-            </div>
-			
-			
-			<div id="stranice">
-			<ul>
-			<li><a href="nova.html" class="trenutna">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">...</a></li>
-			</ul>
-			</div>
-			
+			<h2>Ako ste pogrešno popunili formu, možete ispod prepraviti unesene podatke</h2>
+
+		</p>
+		</div>
+		<div class="Forma"> 
+		<form name="EditForma" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+		<ul>
+		<li>Ime:</li>
+		</ul><br>
+		<input type="text" name="ime" id="ime" class="input" value="<?php 
+										if(isset($_POST['ime']))
+                                       print $_POST['ime'];
+                                   ?>"/>
+				
+		<img id="errorIme" class="Greska" src="Slike/error.jpg" alt="image">
+		<ul id="druginiz">
+		<li>Prezime:</li>
+		</ul><br>
+		<input type="text" name="prezime" id="prezime" class="input" value="<?php 
+										if(isset($_POST['prezime']))
+                                       print $_POST['prezime'];
+                                   ?>" />			
+		<p>
+		E-mail:
+		</p> 
+		<input type="text" name="email" id="email" class="input" value="<?php 
+										if(isset($_POST['email']))
+                                       print $_POST['email'];
+                                   ?>"/>
+						
+		<img id="errorEmail" class="Greska" src="Slike/error.jpg" alt="image">
+		<p>
+		Poruka:
+		</p> 
+		<textarea name="poruka" class="input" rows="4" cols="50"><?php 
+										if(isset($_POST['poruka']))
+                                       print $_POST['poruka'];
+                                   ?></textarea>
+					
+		<img id="errorPoruka" class="Greska" src="Slike/error.jpg" alt="image" />	
+		<br>
+		<br>
+		<input type="submit" value="Izmijeni"/> <!--onclick="validirajFormu();"--> 
+		<input type="reset" value="Ponisti"/>  <!--onclick="obrisiInput();"-->
+		</form>
+		</div>
 	</div>
     </div>
 	<div id="footer">
-	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.php">Kontakt</a><br />
+	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
-<script src="prikaziMenu.js"></script>
+<script type="text/javascript" src="prikaziMenu.js" ></script>
+<script type="text/javascript" src="validacijaForme.js" ></script>
+<script type="text/javascript" src="ponisti.js" ></script>
 <script src="ucitavanjeStranice.js"></script>
 </div> <!-- Kraj svega -->
 </BODY>
