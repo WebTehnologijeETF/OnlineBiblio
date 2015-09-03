@@ -301,7 +301,6 @@ margin-left:50px;
 	font-weight: normal;
 	text-decoration: none;
 	color: #969547;
-	cursor: pointer;
 }
 
 .Sadrzaj_lijevi_dio li a:hover, .Sadrzaj_lijevi_dio li .trenutna{
@@ -375,33 +374,6 @@ height:auto;
 	text-align: justify;
 	padding: 0 0 8px 0;
 }
-
-#detaljnaNovost img
-{
-	float: left;
-	margin-right: 20px;
-	height: 230px;
-	width: 170px;
-	border: 4px solid #383838;
-}
-
-#detaljnaNovost h1{
-font-size: 20px;
-text-align: center;
-}
-
-#detaljnaNovost div{
-	padding: 0 0 0 0;
-	margin: 0 0 10px 0;
-	font-size: 12px;	
-}
-
-#detaljnaNovost div h2
-{
-	font-size: 13px;
-	margin: 0 0 10px 0;
-}
-
 
 #datumObjave
 {
