@@ -8,9 +8,9 @@
 <BODY>
 <div id="kompletna">
 	<div id="menu">
-	<a onclick="loadPage('index.html')"><img src="Slike/logo.jpg" alt="image"></a>
+	<a onclick="loadPage('index.php')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a  onclick="loadPage('index.html')">Naslovna</a></li>
+            <li><a  onclick="loadPage('index.php')" class="trenutna">Naslovna</a></li>
             <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
 				<a onclick="loadPage('knjige.html')">Roman</a>
@@ -36,10 +36,11 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')"  class="trenutna">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
+	
 		<div id="Popust">
 			<p>
                 <span>30%</span> popusta na kupovinu veću od 100 KM!
@@ -53,13 +54,13 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-											<div id="ex">
+				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
     </div>
 	<div id="Sadrzaj">
-		<div id="Sadrzaj_lijevo">
+	<div id="Sadrzaj_lijevo">
 	        	<div class="Sadrzaj_lijevi_dio">
             	<h1>Kategorije</h1>
                 <ul>
@@ -95,82 +96,27 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-	<div id="neki">
-		<h1>Kontakt</h1>
-		<p>
-			Kontaktirajte nas putem navedenih brojeva telefona,<br>
-			
-			<br>
-
-			Tel: +61 328 795<br>
-
-			Fax: +385 52 852 269<br>
-			
-			<br>
-			
-			Putem e-mail-a:<br>
-			
-			<br>
-
-			E-mail: aluckin1@etf.unsa.ba<br>
-			
-			<br>
-			
-			Igmanske oluje, 17<br>
-			71000, Sarajevo.<br>
-			Za slanje privatne poruke vlasnicima na sajtu, molimo popunite sljedeci formular:<br>
-		</p>
-		</div>
-		<div class="Forma"> 
-		<ul>
-		<li>Ime:</li>
-		<li>Mjesto:</li>
-		</ul><br>
-		<input type="text" name="ime" id="ime" class="input" />
-		<img id="errorIme" class="Greska" src="Slike/error.jpg" alt="image">
-		<input type="text" name="mjesto" id="mjesto" class="input"/>
-		<ul id="druginiz">
-		<li>Prezime:</li>
-		<li>Opcina:</li>
-		</ul><br>
-		<input type="text" name="prezime" id="prezime" class="input" />	
-		<input type="text" name="opcina" id="opcina" class="input" />		
-		<p>
-		E-mail:
-		</p> 
-		<input type="text" name="email" id="email" class="input" />
-		<img id="errorEmail" class="Greska" src="Slike/error.jpg" alt="image">
-		<p>
-		<img id="Kod" src="Slike/Kod.jpg" alt="image">
-		Unesite kod sa slike:
-		</p> 
-		<input type="text" name="kod" id="kodslike" class="input" />
-		<img id="errorKod" class="Greska" src="Slike/error.jpg" alt="image">
-		<p>
-		Ponovite kod:
-		</p>
-		<input type="text" name="kod1" id="kodslike1" class="input" />
-		<img id="errorKod1" class="Greska" src="Slike/error.jpg" alt="image">
-		<p>
-		Poruka:
-		</p> 
-		<textarea class="input" rows="4" cols="50"></textarea>
-		<img id="errorPoruka" class="Greska" src="Slike/error.jpg" alt="image" />	
-		<br>
-		<br>
-		<input type="submit" value="Posalji" onclick="validirajFormu();"/> 
-		<input type="reset" value="Ponisti" onclick="obrisiInput();"/> 
+		<div class =  "detaljnaNovost" id = "detaljnaNovost">
+			 <?php 
+				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
+				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
+				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
+				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
+				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
+				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
+				echo '<h1>'.$naslov.'</h1>
+				<img src = "'.$slika.'" alt="Smiley face" >
+				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
+			?>
 		</div>
 	</div>
     </div>
 	<div id="footer">
-	       <a href="index.html">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
+	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
-<script type="text/javascript" src="prikaziMenu.js" ></script>
-<script type="text/javascript" src="validacijaForme.js" ></script>
-<script type="text/javascript" src="ponisti.js" ></script>
-<script src="ucitavanjeStranice.js"></script>
-</div> <!-- Kraj svega -->
+	<script type="text/javascript" src="prikaziMenu.js"></script>
+	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
+	</div><!-- Kraj svega -->
 </BODY>
 </HTML>
