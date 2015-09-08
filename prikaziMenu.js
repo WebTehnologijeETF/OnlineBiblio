@@ -1,6 +1,8 @@
 var item = document.getElementById('padajuci');
 var item2= document.getElementById('padajucipodmenu');
 
+item.style.visibility = 'hidden';
+item2.style.visibility = 'hidden';
 
 var prikaziMenu = function () {
     item.style.visibility = 'visible';
