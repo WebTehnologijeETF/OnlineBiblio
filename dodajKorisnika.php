@@ -1,3 +1,60 @@
+<?php
+		function test_input($data) 
+      {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+      }
+	  
+	 $username=""; 
+	 $password="";
+	 $email=""; 
+	 $admin=""; 
+	 $opsirno=""; 
+	 $pomocna=0;
+	 $sada=0;
+	  
+	 if($_SERVER["REQUEST_METHOD"] == "POST"){
+		 
+	  
+	$username = test_input($_POST["usernameKorisnika"]);
+    $password = test_input($_POST["passwordKorisnika"]);
+	$password=md5($password);
+    $email = test_input($_POST["emailKorisnika"]);
+	$admin = test_input($_POST["adminKorisnika"]);
+	
+	if(empty($username))
+	{
+		$pomocna=0;
+			 $sada=1;
+	}
+	else if(empty($password))
+	{
+		$pomocna=0;	 
+		$sada=1;
+	}
+	else if(empty($email))
+	{
+		$pomocna=0;
+			 $sada=1;
+	}
+	else{
+	
+	$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+	$veza->exec("set names utf8");
+	$rezultat = $veza->query("INSERT INTO korisnici SET username='$username', password='$password', email='$email', admin='$admin'");
+	if (!$rezultat) {
+		$greska = $veza->errorInfo();
+		print "SQL greška: " . $greska[2];
+		exit();
+	}
+	$pomocna=1;
+	$sad=0;
+	}
+	}
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -36,7 +93,7 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -54,13 +111,13 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="login">
+				<div id="login">
 		<?php 
 		session_start();
 		
 		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
 		?>
-
+		<a onclick="loadPage('adminpanel.php')">Admin Panel</a>
 		<a onclick="loadPage('odjava.php')">Odjavite se</a>
 		<?php
 		}
@@ -115,19 +172,33 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
+	<?php
+			if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+				?>
+	<form name="dodajNovost" id="dodajNovost" class="KorisnikForma" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<h1>Dodavanje Korisnika</h1><br>
+		<div>Username:</div>
+		<input type="text" name="usernameKorisnika" id="usernameKorisnika" class="input"/><br><br>
+		<div>-------------------------------------------------------------------</div>
+		<div>Password:</div>
+		<input type="password" name="passwordKorisnika" id="passwordKorisnika" class="input"/><br><br>
+		<div>-------------------------------------------------------------------</div>
+		<div>Email:</div>
+		<input type="text" name="emailKorisnika" id="emailKorisnika" class="input"/><br><br>
+		<div>-------------------------------------------------------------------</div>
+		<div>Admin:</div>
+		<input type="hidden" name="adminKorisnika" value="0" />
+		<input type="checkbox" name="adminKorisnika" id="adminKorisnika" class="input" value="1"/><br><br>
+		<div>-------------------------------------------------------------------</div>
+		
+		<button type="submit">Dodaj Korisnika</button>
+		<button type="reset">Ponisti</button><br>
+		</form>
+		<?php
+			}
 			?>
-		</div>
+	
+	
 	</div>
     </div>
 	<div id="footer">
@@ -136,6 +207,18 @@
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="prikazKomentara.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>
+<?php
+if($pomocna){
+$novost = "Uspjesno dodan korisnik!";
+echo "<script type='text/javascript'>alert('$novost');</script>";
+}
+if($sada)
+{
+$nov = "Unesite sva polja!";
+echo "<script type='text/javascript'>alert('$nov');</script>";
+}
+?>

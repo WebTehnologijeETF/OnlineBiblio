@@ -26,7 +26,7 @@
 						      ->setText($message);
 						try
 						{
-							//$sendgrid->send($email);
+							$sendgrid->send($email);
 						$por = "Mail uspjesno poslan!";
 						echo "<script type='text/javascript'>alert('$por');
 						window.location = \"index.php\";

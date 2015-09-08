@@ -138,6 +138,7 @@ height: 70px;
 /* padajuci */
 
 #padajuci{
+	visibility:hidden;
 	width: 87px;
 	margin-top: 45px;
 	position: absolute;
@@ -159,6 +160,7 @@ height: 70px;
 }
 
 #padajucipodmenu{
+	visibility:hidden;
 	width: 87px;
 	margin-top: 0px;
 	position: absolute;
@@ -332,6 +334,149 @@ width:100px;
 height:auto;
 }
 
+.Ponuda input{
+border-style: solid;
+border-color: transparent;
+width: 200px;
+}
+
+.Ponuda textarea{
+
+height: 70px;
+border-style: solid;
+border-color: transparent;
+margin-bottom:10px;
+}
+
+
+#paragraf{
+cursor:pointer;
+color: #cbc750;
+}
+
+.komentar{
+border: 4px solid #383838;
+padding: 5px 5px 5px 5px;
+}
+
+#odmakni button
+{
+margin-top: 10px;
+}
+
+#login{
+margin-top:5px;
+position: absolute;
+right: 235px;
+cursor: pointer;
+}
+
+#login a{
+font-size: 16px;
+}
+
+#prijavaForma{
+border: 4px solid #383838;
+padding: 10px 10px 10px 10px;
+width:200px;
+
+}
+
+#prijavaForma a
+{
+	cursor: pointer;
+	color: #e6e154; 
+}
+
+#prijavaForma div{
+
+}
+
+#prijavaForma button{
+margin-top: 20px;
+}
+
+#prijavaForma input {
+border-style: solid;
+border-color: transparent;
+width: 200px;
+}
+
+#dodajNovost
+{
+border: 4px solid #383838;
+padding: 10px 10px 10px 10px;
+}
+
+#dodajNovost input{
+border-style: solid;
+border-color: transparent;
+width: 200px;
+}
+
+.Korisnik1 
+{
+border: 4px solid #383838;
+padding: 10px 10px 10px 10px;
+
+}
+
+.KorisnikForma
+{
+width:335px;
+
+}
+
+.KorisnikForma input{
+border-style: solid;
+border-color: transparent;
+width: 300px;
+margin-left:10px;
+}
+
+#dodajNovost button{
+margin-top: 20px;
+width:150px;
+height: 30px;
+margin-bottom: 10px;
+margin-left: 10px;
+}
+
+#dodajNovost div
+{
+	color: #CBC750;
+	margin-bottom:10px;
+}
+
+
+
+.komentari{
+position:absolute;
+visibility: hidden;
+}
+
+.komentar div{
+color: #cbc750;
+}
+
+.autor{
+cursor:pointer;
+text-decoration: underline;
+}
+
+#dugmadAdminPanel button
+{
+height: 40px;
+}
+
+#dugmadAdminPanel ul li{
+display: inline;
+margin-right: 20px;
+}
+
+#Sadrzaj_desno #dugmadAdminPanel ul{
+padding-left: 0px;
+}
 
 #Sadrzaj_desni h1 {
 	padding: 10px;
@@ -517,6 +662,7 @@ position: absolute;
 margin-left:-32px;
 visibility: hidden;
 }
+
 
 .Forma ul li{
 display: inline;

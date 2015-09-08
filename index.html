@@ -5,12 +5,12 @@
 <link href="stil.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </HEAD>
-<BODY>
+<BODY onpageshow="dodajNovosti()">
 <div id="kompletna">
 	<div id="menu">
-	<a onclick="loadPage('index.php')"><img src="Slike/logo.jpg" alt="image"></a>
+	<a onclick="loadPage('index.html')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a  onclick="loadPage('index.php')" class="trenutna">Naslovna</a></li>
+            <li><a  onclick="loadPage('index.html')" class="trenutna">Naslovna</a></li>
             <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
 				<a onclick="loadPage('knjige.html')">Roman</a>
@@ -55,30 +55,16 @@
             <a href="#">Detaljnije...</a>
         </div>
 		<div id="login">
-		<?php 
-		session_start();
-		
-		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
-		?>
-
-		<a onclick="loadPage('odjava.php')">Odjavite se</a>
-		<?php
-		}
-		else{
-		?>
-		
-		<a onclick="loadPage('prijavaKorisnika.php')">Prijavite se</a>
-		
-		<?php
-		}
-		?>
 				</div>
+		
+		
+		
 				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
     </div>
-	<div id="Sadrzaj">
+	<div id="Sadrzaj" onmouseover="refresuj();">
 	<div id="Sadrzaj_lijevo">
 	        	<div class="Sadrzaj_lijevi_dio">
             	<h1>Kategorije</h1>
@@ -115,27 +101,47 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
-			?>
-		</div>
+			<div id = "Novosti_lijevo">
+			        	<div class="Ponuda">
+            	<h1>PROVJERITE PONUDE ISPOD,OVE SU PISANE <span>(by J.K.R.)</span></h1>
+   	      <img src="Slike/mudrac.jpg" alt="image" />
+                <div class="ukratko">
+                	<p>Na početku priče, 1. studenog 1981., čarobnjak i vještica, Albus Dumbledore i Minerva McGonagall, se sreću...</p>
+                  <h3>15 KM</h3>
+                    <div class="kupi"><a>Kupi</a></div>
+                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
+                </div>
+                <div class="cleaner">&nbsp;</div>
+            </div>
+			
+	
+				</div>
+			
+			<div id = "Novosti_desno">
+						<div class="Ponuda">
+            	<h1>U HTML-U RADI PRIMJERA IZGLEDA<span>(by J.K.R.)</span></h1>
+   	      <img src="Slike/odaja.jpg" alt="image" />
+                <div class="ukratko">
+                	<p>Harry provodi još jedne ljetne praznike kod Dursleyjevih. U Kalinin prilaz dolazi kućni vilenjak Dobby...</p>
+                  <h3>15 KM</h3>
+                    <div class="kupi"><a href="#">Kupi</a></div>
+                    <div class="detaljnije"><a href="#">Detaljnije</a></div>
+                </div>
+                <div class="cleaner">&nbsp;</div>
+            </div>
+				</div>
+			
 	</div>
     </div>
 	<div id="footer">
-	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
+	       <a href="index.html">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
+	<script type="text/javascript" src="ubaciNovosti.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="prikazKomentara.js"></script>
+	<script type="text/javascript" src="ubaciNovosti.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>

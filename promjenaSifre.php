@@ -1,3 +1,44 @@
+<?php
+	function test_input($data) 
+      {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+      }
+	  
+	 $validna=0; 
+	
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+	function randomPassword() {
+    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+    $pass = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+    return implode($pass); //turn the array into a string
+	}
+	$email= test_input($_POST["emailSifre"]);
+	$sifra=randomPassword();
+	if($email=="onlinebiblio@hotmail.com"){
+	$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+	$veza->exec("set names utf8");
+	$rezultat = $veza->query("UPDATE korisnici SET password='".$sifra."' WHERE email='".$email."'");
+	if (!$rezultat) {
+	$greska = $veza->errorInfo();
+	print "SQL greška: " . $greska[2];
+	exit();
+	}
+	$validna=1;
+	}
+	else{
+		$validna=2;
+		
+	}
+	}
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -36,7 +77,7 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -54,25 +95,6 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="login">
-		<?php 
-		session_start();
-		
-		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
-		?>
-
-		<a onclick="loadPage('odjava.php')">Odjavite se</a>
-		<?php
-		}
-		else{
-		?>
-		
-		<a onclick="loadPage('prijavaKorisnika.php')">Prijavite se</a>
-		
-		<?php
-		}
-		?>
-				</div>
 				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
@@ -115,20 +137,14 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
-			?>
-		</div>
-	</div>
+	
+		<form name="promjenaSifre" id="promjenaSifre" action="promjenaSifre.php" method="post">
+		<div>Unesite vaš email, radi provjere:</div><br>
+		<input type="text" name="emailSifre" id="email" class="input"/><br><br>
+		
+		<button type="submit">Promijeni šifru</button>
+		</form>
+</div>
     </div>
 	<div id="footer">
 	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
@@ -136,6 +152,22 @@
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="prikazKomentara.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>
+<?php
+
+if($validna==1){
+	
+$me = "Sifra promijenjena i poslana na vas mail!";
+echo "<script type='text/javascript'>alert('$me');</script>";
+}
+else if($validna==2)
+{
+$mes = "Netacan email!!!";
+echo "<script type='text/javascript'>alert('$mes');</script>";
+}
+
+
+?>

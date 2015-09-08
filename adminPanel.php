@@ -1,19 +1,3 @@
-<?php
-    
-	function test_input($data) 
-      {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-      }
-	  
-	$ime = test_input($_POST["ime"]);
-    $prezime = test_input($_POST["prezime"]);
-    $email = test_input($_POST["email"]);
-    $poruka = test_input($_POST["poruka"]);
-
-?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -26,7 +10,7 @@
 	<div id="menu">
 	<a onclick="loadPage('index.php')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a  onclick="loadPage('index.php')">Naslovna</a></li>
+            <li><a  onclick="loadPage('index.php')" class="trenutna">Naslovna</a></li>
             <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
 				<a onclick="loadPage('knjige.html')">Roman</a>
@@ -52,10 +36,11 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.php')"  class="trenutna">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
+	
 		<div id="Popust">
 			<p>
                 <span>30%</span> popusta na kupovinu veću od 100 KM!
@@ -75,7 +60,7 @@
 		
 		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
 		?>
-
+		<a onclick="loadPage('adminpanel.php')">Admin Panel  </a>
 		<a onclick="loadPage('odjava.php')">Odjavite se</a>
 		<?php
 		}
@@ -88,7 +73,7 @@
 		}
 		?>
 				</div>
-											<div id="ex">
+				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
@@ -130,83 +115,40 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div id="neki">
-		<h1>Kontakt</h1>
-		<p>
-			<h2>Provjerite da li ste ispravno popunili kontakt formu.</h2>
-			
-			<form name="PrikazForma" action="posaljiMail.php" method="post">
-			
-			<p>Ime: <?php echo $ime?></p><br>
-            <p>Prezime: <?php echo $prezime?></p><br>
-            <p>Email: <?php echo $email?></p><br>
-            <p>Poruka: <?php echo $poruka?></p><br>
-			<h2>Da li ste sigurni da želite poslati ove podatke?</h2>
-			<input type = "hidden" name = "imeSlanje" value = "<?php echo $ime; ?>">
-			<input type = "hidden" name = "prezimeSlanje" value = "<?php echo $prezime; ?>">
-			<input type = "hidden" name = "emailSlanje" value = "<?php echo $email; ?>">
-			<input type = "hidden" name = "porukaSlanje" value = "<?php echo $poruka; ?>">
-			
-			<input type="submit" value="Siguran sam"/>
-			</form>
+	<?php
+			if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+				?>
+			<div id="dugmadAdminPanel">
+			<h1>Panel Za Novosti i Komentare</h1>
+			<ul>
+			<li><button type="button" onclick="loadPage('dodajNovost.php')">Dodaj Novost</button></li>
+			<li><button type="button" onclick="loadPage('urediNovost.php')">Uredi Novosti i komentare</button></li>
+			</ul>
+			<br>
+			<h1>Panel Za Korisnike</h1>
+			<ul>
+			<li><button type="button" onclick="loadPage('dodajKorisnika.php')">Dodaj Korisnika</button></li>
+			<li><button type="button" onclick="loadPage('urediKorisnika.php')">Izmijena i Brisanje Korisnika</button></li>
+			</ul>
 			<br>
 			
-			<h2>Ako ste pogrešno popunili formu, možete ispod prepraviti unesene podatke</h2>
-
-		</p>
-		</div>
-		<div class="Forma"> 
-		<form name="EditForma" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-		<ul>
-		<li>Ime:</li>
-		</ul><br>
-		<input type="text" name="ime" id="ime" class="input" value="<?php 
-										if(isset($_POST['ime']))
-                                       print $_POST['ime'];
-                                   ?>"/>
-				
-		<img id="errorIme" class="Greska" src="Slike/error.jpg" alt="image">
-		<ul id="druginiz">
-		<li>Prezime:</li>
-		</ul><br>
-		<input type="text" name="prezime" id="prezime" class="input" value="<?php 
-										if(isset($_POST['prezime']))
-                                       print $_POST['prezime'];
-                                   ?>" />			
-		<p>
-		E-mail:
-		</p> 
-		<input type="text" name="email" id="email" class="input" value="<?php 
-										if(isset($_POST['email']))
-                                       print $_POST['email'];
-                                   ?>"/>
-						
-		<img id="errorEmail" class="Greska" src="Slike/error.jpg" alt="image">
-		<p>
-		Poruka:
-		</p> 
-		<textarea name="poruka" class="input" rows="4" cols="50"><?php 
-										if(isset($_POST['poruka']))
-                                       print $_POST['poruka'];
-                                   ?></textarea>
-					
-		<img id="errorPoruka" class="Greska" src="Slike/error.jpg" alt="image" />	
-		<br>
-		<br>
-		<input type="submit" value="Izmijeni"/> <!--onclick="validirajFormu();"--> 
-		<input type="reset" value="Ponisti"/>  <!--onclick="obrisiInput();"-->
-		</form>
-		</div>
-	</div>
+			</div>
+			<?php
+		}
+		?>
+	
+	
+	
+	
+</div>
     </div>
 	<div id="footer">
 	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
-<script type="text/javascript" src="prikaziMenu.js" ></script>
-<script type="text/javascript" src="validacijaForme.js" ></script>
-<script type="text/javascript" src="ponisti.js" ></script>
-<script src="ucitavanjeStranice.js"></script>
+	<script type="text/javascript" src="prikaziMenu.js"></script>
+	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
+	<script type="text/javascript" src="prikazKomentara.js"></script>
 </div> <!-- Kraj svega -->
 </BODY>
 </HTML>

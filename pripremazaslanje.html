@@ -10,7 +10,7 @@
 	<div id="menu">
 	<a onclick="loadPage('index.php')"><img src="Slike/logo.jpg" alt="image"></a>
     	<ul>
-            <li><a  onclick="loadPage('index.php')" class="trenutna">Naslovna</a></li>
+            <li><a  onclick="loadPage('index.php')">Naslovna</a></li>
             <li onmouseover="prikaziMenu();" onmouseout="sakrijMenu();"><a onclick="loadPage('cjenovnik.html')">Pretraga <img src="Slike/strelica.jpg" alt="image"></a>
 			<div id="padajuci">
 				<a onclick="loadPage('knjige.html')">Roman</a>
@@ -36,11 +36,10 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')"  class="trenutna">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
-	
 		<div id="Popust">
 			<p>
                 <span>30%</span> popusta na kupovinu veću od 100 KM!
@@ -54,26 +53,9 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="login">
-		<?php 
-		session_start();
-		
-		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
-		?>
-
-		<a onclick="loadPage('odjava.php')">Odjavite se</a>
-		<?php
-		}
-		else{
-		?>
-		
-		<a onclick="loadPage('prijavaKorisnika.php')">Prijavite se</a>
-		
-		<?php
-		}
-		?>
+				<div id="login">
 				</div>
-				<div id="ex">
+											<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
 		</div>
@@ -115,18 +97,57 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
-			?>
+		<div id="neki">
+		<h1>Kontakt</h1>
+		<p>
+			<h2>Provjerite da li ste ispravno popunili kontakt formu.</h2>
+			
+			<form name="PrikazForma" action="posaljiMail.php" method="post">
+			
+			<p>Ime: <p id="Ime"></p></p><br>
+            <p>Prezime: <p id="Prezime"></p></p><br>
+            <p>Email: <p id="Email"></p></p><br>
+            <p>Poruka: <p id="Poruka"></p></p><br>
+			<h2>Da li ste sigurni da želite poslati ove podatke?</h2>
+			<input type = "hidden" name = "imeSlanje" id="imeSlanje" value = "">
+			<input type = "hidden" name = "prezimeSlanje" id="prezimeSlanje" value = "">
+			<input type = "hidden" name = "emailSlanje" id="emailSlanje" value = "">
+			<input type = "hidden" name = "porukaSlanje" id="porukaSlanje" value = "">
+			
+			<input type="submit" value="Siguran sam"/>
+			</form>
+			<br>
+			
+			<h2>Ako ste pogrešno popunili formu, možete ispod prepraviti unesene podatke</h2>
+
+		</p>
+		</div>
+		<div class="Forma"> 
+		<form name="EditForma" method="post">
+		<ul>
+		<li>Ime:</li>
+		</ul><br>
+		<input type="text" name="ime" id="tempime" class="input" value=""/>
+		<img id="errorIme" class="Greska" src="Slike/error.jpg" alt="image">
+		<ul id="druginiz">
+		<li>Prezime:</li>
+		</ul><br>
+		<input type="text" name="prezime" id="tempprezime" class="input" value="" />			
+		<p>
+		E-mail:
+		</p> 
+		<input type="text" name="email" id="tempemail" class="input" value=""/>
+		<img id="errorEmail" class="Greska" src="Slike/error.jpg" alt="image">
+		<p>
+		Poruka:
+		</p> 
+		<textarea name="poruka" id="tempporuka" class="input" rows="4" cols="50"></textarea>
+		<img id="errorPoruka" class="Greska" src="Slike/error.jpg" alt="image" />	
+		<br>
+		<br>
+		<input type="button" value="Izmijeni" onclick="validirajFormu();"/> <!--onclick="validirajFormu();"--> 
+		<input type="reset" value="Ponisti"/>  <!--onclick="obrisiInput();"-->
+		</form>
 		</div>
 	</div>
     </div>
@@ -134,8 +155,10 @@
 	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
-	<script type="text/javascript" src="prikaziMenu.js"></script>
-	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="Javascript/updateForme.js" ></script>
+<script type="text/javascript" src="prikaziMenu.js" ></script>
+<script type="text/javascript" src="ponisti.js" ></script>
+<script src="ucitavanjeStranice.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>

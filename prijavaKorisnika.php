@@ -1,3 +1,50 @@
+<?php
+	function test_input($data) 
+      {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+      }
+	$validiraj=0;
+
+	$username = "";
+	$password = "";
+
+		
+	if($_SERVER["REQUEST_METHOD"] == "POST")
+      {
+		 session_start();
+		$username=test_input($_POST['username']);
+		$password=test_input($_POST['password']);
+		$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+		$veza->exec("set names utf8");
+		$password = md5($password);
+		$korisnici = $veza->query("select id, username,password, admin, email from korisnici where username = '".$username."' and password='".$password."'");
+		if (!$korisnici) {
+		$greska = $veza->errorInfo();
+		print "SQL greška: " . $greska[2];
+		exit();
+		}
+		$usernameSQL="";
+		$passwordSQL="";
+		foreach($korisnici as $korisnik){
+		$usernameSQL=$korisnik['username'];
+		$passwordSQL=$korisnik['password'];
+		$userid=$korisnik['id'];
+		}
+		
+		if($usernameSQL==$username && $passwordSQL==$password){
+			$validiraj=1;
+			$_SESSION['user_id']=$userid;
+		}
+		else{
+			$validiraj=2;
+		}
+			
+	  }
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -20,7 +67,7 @@
 				<ul><li id="strelicadesno" onmouseover="prikaziPodMenu();" onmouseout="sakrijPodMenu();"><a onclick="loadPage('knjige.html')">Historijski<img src="Slike/strelica2.jpg" alt="image"></a>
 				<div id="padajucipodmenu">
 				<a onclick="loadPage('knjige.html')">Istiniti</a>
-				<a onclick="loadPage('knjige.html')">Fikcija</a>
+				<a onclick="loadPage('knjige.html')">Fikcija</a><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 				</div>
 				</li>
 				</ul>
@@ -36,7 +83,7 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -54,15 +101,15 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="login">
+						<div id="login">
 		<?php 
-		session_start();
 		
 		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
 		?>
-
+		<a onclick="loadPage('adminpanel.php')">Admin Panel  </a>
 		<a onclick="loadPage('odjava.php')">Odjavite se</a>
 		<?php
+		header('location: index.php');
 		}
 		else{
 		?>
@@ -115,19 +162,23 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
-			?>
+		<div id="neki">
+		<h1>Prijava korisnika</h1>
 		</div>
+		
+		<form name="prijavaForma" id="prijavaForma" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+		<div>Username:</div>
+		<input type="text" name="username" id="username" class="input"/><br><br>
+		<div>Password:</div>
+		<input type="password" name="password" id="password" class="input"/><br>
+		
+		<button type="submit">Prijava</button>
+		<button type="reset">Ponisti</button><br><br><br>
+		
+		<a onclick="loadPage('promjenaSifre.php')" >Zaboravili ste šifru?</a>
+		</form>
+			
+			
 	</div>
     </div>
 	<div id="footer">
@@ -136,6 +187,22 @@
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="prikazKomentara.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>
+<?php
+
+if($validiraj==1){
+	
+$me = "Uspjesno logovanje!";
+echo "<script type='text/javascript'>alert('$me');</script>";
+}
+else if($validiraj==2)
+{
+$mes = "Netacan username ili password!";
+echo "<script type='text/javascript'>alert('$mes');</script>";
+}
+
+
+?>

@@ -1,3 +1,39 @@
+<?php
+		function test_input($data) 
+      {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+      }
+	  
+	 $naslov=""; 
+	 $autor="";
+	 $slika=""; 
+	 $tekst=""; 
+	 $opsirno=""; 
+	 $pomocna=0;
+	  
+	 if($_SERVER["REQUEST_METHOD"] == "POST"){
+	  
+	$naslov = test_input($_POST["naslovNovosti"]);
+    $autor = test_input($_POST["autorNovosti"]);
+    $slika = test_input($_POST["slikaNovosti"]);
+	$tekst = test_input($_POST["tekstNovosti"]);
+	$opsirno = test_input($_POST["opsirnoNovosti"]);
+	
+	$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+	$veza->exec("set names utf8");
+	$rezultat = $veza->query("INSERT INTO novosti SET naslov='$naslov', tekst='$tekst', autor='$autor', slika='$slika' , opsirno='$opsirno'");
+	if (!$rezultat) {
+		$greska = $veza->errorInfo();
+		print "SQL greška: " . $greska[2];
+		exit();
+	}
+	$pomocna=1;
+	}
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -36,7 +72,7 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -54,13 +90,13 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="login">
+				<div id="login">
 		<?php 
 		session_start();
 		
 		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
 		?>
-
+		<a onclick="loadPage('adminpanel.php')">Admin Panel</a>
 		<a onclick="loadPage('odjava.php')">Odjavite se</a>
 		<?php
 		}
@@ -115,19 +151,37 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
+	<?php
+			if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+				?>
+	<form name="dodajNovost" id="dodajNovost" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<h1>Dodavanje Novosti</h1><br>
+		<div>Naslov:</div>
+		<input type="text" name="naslovNovosti" id="naslovNovosti" class="input"/><br><br>
+		<p>---------------------------------------------------------------------------------------------------------------------------------</p>
+		<div>Autor:</div>
+		<input type="text" name="autorNovosti" id="autorNovosti" class="input"/><br><br>
+		<p>---------------------------------------------------------------------------------------------------------------------------------</p>
+		<div>Slika(URL unesite):</div>
+		<input type="text" name="slikaNovosti" id="slikaNovosti" class="input"/><br><br>
+		<p>---------------------------------------------------------------------------------------------------------------------------------</p>
+		<div>Tekst:</div>
+		<textarea name="tekstNovosti" class="input" rows="4" cols="50"></textarea><br><br>
+		<p>---------------------------------------------------------------------------------------------------------------------------------</p>
+		<div>Opsirno:</div>
+		<textarea name="opsirnoNovosti" class="input" rows="4" cols="50"></textarea><br><br>
+		<p>---------------------------------------------------------------------------------------------------------------------------------</p>
+
+		
+		
+		<button type="submit">Dodaj Novost</button>
+		<button type="reset">Ponisti</button><br>
+		</form>
+		<?php
+			}
 			?>
-		</div>
+	
+	
 	</div>
     </div>
 	<div id="footer">
@@ -136,6 +190,13 @@
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="prikazKomentara.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>
+<?php
+if($pomocna){
+$novost = "Uspjesno dodana novost!";
+echo "<script type='text/javascript'>alert('$novost');</script>";
+}
+?>

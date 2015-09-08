@@ -1,3 +1,78 @@
+<?php
+		session_start();
+		function test_input($data) 
+      {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+      }
+	  
+	 $username=""; 
+	 $password="";
+	 $email=""; 
+	 $admin=""; 
+	 $opsirno=""; 
+	 $pomocna=0;
+	 $drugapomocna=0;
+	 $trecapomocna=0;
+	 $korisnickiId="";
+	  
+	 if($_SERVER["REQUEST_METHOD"] == "POST"){
+		 
+		 $idKorisnika=$_POST['idKorisnika'];
+		 $korisnickiId=$idKorisnika;
+		 
+		 if(isset($_POST['obrisiKorisnika'.$idKorisnika]))
+		 {
+			$novaveza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+			$novaveza->exec("set names utf8");
+			$obrisikomentar = $novaveza->query("DELETE FROM korisnici WHERE id = '".$idKorisnika."'");
+			if (!$obrisikomentar) {
+			$greska = $novaveza->errorInfo();
+			print "SQL greška: " . $greska[2];
+			exit();
+			}
+			 $drugapomocna=1;
+			 
+		 }
+	else if(isset($_POST['izmijeniKorisnika'.$idKorisnika])){
+			 
+	  
+	$username = test_input($_POST["usernameKorisnika".$idKorisnika]);
+    $password = test_input($_POST["passwordKorisnika".$idKorisnika]);
+    $email = test_input($_POST["emailKorisnika".$idKorisnika]);
+	$admin = test_input($_POST["adminKorisnika".$idKorisnika]);
+	
+	if(empty($username))
+	{
+		$trecapomocna=1;
+	}
+	else if(empty($password))
+	{
+		$trecapomocna=1;
+	}
+	else if(empty($email))
+	{
+		$trecapomocna=1;
+	}
+	else{
+	$password=md5($password);
+	$konekcija = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+	$konekcija->exec("set names utf8");
+	$povratak = $konekcija->query("UPDATE korisnici SET username='".$username."', password='".$password."', email='".$email."', admin='".$admin."' WHERE id='".$idKorisnika."'");
+	if (!$povratak) {
+	$greska = $konekcija->errorInfo();
+	print "SQL greška: " . $greska[2];
+	exit();
+	}
+	$pomocna=1;
+	$trecapomocna=0;
+	}
+}
+}
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -36,7 +111,7 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.html')">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.php')">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -54,13 +129,13 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
-		<div id="login">
+				<div id="login">
 		<?php 
-		session_start();
+
 		
 		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
 		?>
-
+		<a onclick="loadPage('adminpanel.php')">Admin Panel</a>
 		<a onclick="loadPage('odjava.php')">Odjavite se</a>
 		<?php
 		}
@@ -115,19 +190,79 @@
             </div>
 			</div>
 	<div id="Sadrzaj_desni">
-		<div class =  "detaljnaNovost" id = "detaljnaNovost">
-			 <?php 
-				$dateTime = isset($_GET['dateTime']) ? $_GET['dateTime'] : '';
-				$autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-				$naslov = isset($_GET['naslov']) ? $_GET['naslov'] : '';
-				$opis = isset($_GET['opis']) ? $_GET['opis'] : '';
-				$detOpis = isset($_GET['detOpis']) ? $_GET['detOpis'] : '';
-				$slika = isset($_GET['slika']) ? $_GET['slika'] : '';
-				echo '<h1>'.$naslov.'</h1>
-				<img src = "'.$slika.'" alt="Smiley face" >
-				<div id="detaljanPrikaz"><h2>Datum objave: '.$dateTime.'</h2><h2>Autor: '.$autor.'</h2><h2>Naslov: '.$naslov.'</h2><div>'.$opis.$detOpis.'</div></div>';
+	<?php
+			if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+				
+					$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+					$veza->exec("set names utf8");
+					$rezultat = $veza->query("select id, username, password, email, admin from korisnici");
+					if (!$rezultat) {
+					$greska = $veza->errorInfo();
+					print "SQL greška: " . $greska[2];
+					exit();
+					}
+					foreach($rezultat as $obicni)
+					{
+						?>
+						<form name="dodajNovost" id="dodajNovost" class="KorisnikForma" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+						<?php 
+						echo '<div class="Korisnik1">';
+						echo '<h1>Podaci Korisnika</h1>';
+						echo '<br><div> Username: '.$obicni['username'];
+						if($obicni['admin'])
+						{
+						echo '[Admin]
+						';
+						}
+						else
+						{
+							echo '[Clan/Korisnik]
+							';
+						}
+						
+						echo '</div><br>
+						Email: '.$obicni['email'].
+						'<br><button type=submit name="obrisiKorisnika'.$obicni['id'].'">Izbrisi Korisnika</button>';
+						echo '<div>-------------------------------------------------------------</div>';
+				?>
+
+				
+		<h1>Izmijeni Korisnika</h1><br>
+		<input type="hidden" name="idKorisnika" id="usernameKorisnika" class="input" value="<?php echo $obicni['id'];
+		?>"/>
+		<div>Username:</div>
+		<input type="text" name="usernameKorisnika<?php echo $obicni['id'];
+		?>" id="usernameKorisnika" class="input"/><br><br>
+		<div>-------------------------------------------------------------</div>
+		<div>Password:</div>
+		<input type="password" name="passwordKorisnika<?php echo $obicni['id'];
+		?>" id="passwordKorisnika" class="input"/><br><br>
+		<div>-------------------------------------------------------------</div>
+		<div>Email:</div>
+		<input type="text" name="emailKorisnika<?php echo $obicni['id'];
+		?>" id="emailKorisnika" class="input"/><br><br>
+		<div>-------------------------------------------------------------</div>
+		<div>Admin:</div>
+		<input type="hidden" name="adminKorisnika<?php echo $obicni['id'];
+		?>" value="0" />
+		<input type="checkbox" name="adminKorisnika<?php echo $obicni['id'];
+		?>" id="adminKorisnika" class="input" value="1"/><br><br>
+		<div>-------------------------------------------------------------</div>
+		
+		<button type="submit" name="izmijeniKorisnika<?php echo $obicni['id'];
+		?>">Izmijeni Korisnika</button>
+		<button type="reset">Ponisti</button><br>
+
+		<?php
+		echo '</div></form>';
+				
+			}
 			?>
-		</div>
+			<?php
+			}
+			?>
+	
+	
 	</div>
     </div>
 	<div id="footer">
@@ -136,6 +271,28 @@
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
-	</div><!-- Kraj svega -->
+	<script type="text/javascript" src="prikazKomentara.js"></script>
+</div> <!-- Kraj svega -->
 </BODY>
 </HTML>
+<?php
+if($pomocna){
+$novost = "Uspjesno izmijenjen korisnik!";
+echo "<script type='text/javascript'>alert('$novost');</script>";
+}
+if($drugapomocna)
+{
+	$trenutni = $_SESSION['user_id'];
+	if($trenutni==$korisnickiId)
+	{
+		session_destroy();
+	}
+	$no = "Uspjesno obrisan korisnik!";
+echo "<script type='text/javascript'>alert('$no');</script>";
+}
+if($trecapomocna)
+{
+		$n = "Niste unijeli sve podatke!";
+echo "<script type='text/javascript'>alert('$n');</script>";
+}
+?>
