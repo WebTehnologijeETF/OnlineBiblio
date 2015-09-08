@@ -54,6 +54,28 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
+		<div id="login">
+		<?php 
+		session_start();
+		
+		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+		?>
+		<a onclick="loadPage('adminpanel.php')">Admin Panel  </a>
+		<a onclick="loadPage('odjava.php')">Odjavite se</a>
+		<?php
+		}
+		else{
+		?>
+		
+		<a onclick="loadPage('prijavaKorisnika.php')">Prijavite se</a>
+		
+		<?php
+		}
+		?>
+				</div>
+		
+		
+		
 				<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
@@ -112,8 +134,9 @@
 			
 			
 					<?php 
+					include 'dodavanjeKomentara.php';
 						$promjena=true;
-					 	$ucitaniFajlovi = glob("Novosti/*.txt");
+					 	/*$ucitaniFajlovi = glob("Novosti/*.txt");
 						
 $niz = array();
 					 	foreach ($ucitaniFajlovi as $fajl) 
@@ -183,55 +206,51 @@ $niz = array();
 								
 								
 								
+							}*/
+							
+							$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+							$veza->exec("set names utf8");
+							$rezultat = $veza->query("select id, naslov, autor, tekst, opsirno, UNIX_TIMESTAMP(vrijeme) vrijeme2, slika from novosti order by vrijeme desc");
+							if (!$rezultat) {
+							$greska = $veza->errorInfo();
+							print "SQL greška: " . $greska[2];
+							exit();
 							}
+							
 						
 						$brojac=true;
-					 	foreach ($ucitaniFajlovi as $file) 
+					 	foreach ($rezultat as $file) 
 					 	{
 							if($brojac==false)
 							{
 								$brojac=true;
 								continue;
 							}
+							$id = $file['id'];
+							
 							$opsirnije="";
-					 		$content = file($file);
-					 		$opisNovosti = "";
-					 		$detaljanOpisNovosti = "";
+					 		$opisNovosti = $file['tekst'];
+					 		$detaljanOpisNovosti = $file['opsirno'];
+							$bool = true;
+							if($detaljanOpisNovosti==null){
 					 		$bool = false;
+							}
 
-					 		for($i = 4; $i < count($content); $i++)
-					 		{
-					 			if($content[$i] === "--\r\n")
-					 			{
-					 				$bool = true;
-					 				continue;
-					 			}
-
-					 			if($bool == false)
-					 			{
-					 				$opisNovosti .= trim($content[$i]);
-					 			}
-					 			else if ($bool == true)
-					 			{
-					 				$detaljanOpisNovosti .= trim($content[$i]);
-					 			}
-					 		}
-					 		$dateTime = "";
-					 		$autorNovosti = "";
-					 		$naslovNovosti = "";
-					 		$slikaNovosti = "";
+					 		$dateTime = date("d.m.Y. H:i:s", $file['vrijeme2']);
+					 		$autorNovosti = $file['autor'];
+					 		$naslovNovosti = $file['naslov'];
+					 		$slikaNovosti = $file['slika'];
 
 							
-					 		$dateTime = trim($content[0]);
-					 		$autorNovosti = trim($content[1]);
-					 		$naslovNovosti = trim(ucfirst(strtolower($content[2])));
-					 		$slikaNovosti = trim($content[3]);
 							
 					 		if($bool == true)
 					 		{
 								$opsirnije = "<a onclick=\"loadPage('detaljanprikaz.php?dateTime=$dateTime&autor=$autorNovosti&naslov=$naslovNovosti&opis=$opisNovosti&detOpis=$detaljanOpisNovosti&slika=$slikaNovosti');\" >Opsirnije...</a>";
 									
 					 		}
+							
+							$komentari = $veza->query("select id, novost,tekst, autor, UNIX_TIMESTAMP(vrijeme) vrijeme2, email from komentari where novost = '$id' order by vrijeme asc");
+							$brojKomentara = $komentari->rowCount();
 							
 					 		echo '<div class = "Ponuda">
 								  <h1> '.$naslovNovosti. '<span>(by '.$autorNovosti.')</span></h1>
@@ -243,10 +262,41 @@ $niz = array();
 								<div class="detaljnije">'.$opsirnije.'</div>
 								</div>
 								<div><p id="datumObjave">Datum objave: '.$dateTime.'</p></div>
+								<div>-------------------------------------------------------------</div>
+								<div id="paragraf" onclick="prikaziKomentar(\''; echo 'komentari'.$id; echo '\');">Broj komentara: '.$brojKomentara.'</div>
+								<div id="komentari'.$id.'" class="komentari">';
 								
-								<div class="cleaner">&nbsp;</div>
+							foreach($komentari as $jedan){
+							$sadasnjiDatum = date("d.m.Y. H:i:s", $jedan['vrijeme2']);
+							echo '
+							<div>-------------------------------------------------------------</div>
+							<div id="komentar'.$jedan['id']; echo '"class="komentar">
+							
+							<div>Datum objave: </div>'.$sadasnjiDatum.'<br><br> <div id="autor" class="autor">Autor: '.$jedan['autor'].'</div><br> <div id="mail'.$jedan['id']; echo '" class="mail">Email: </div>'.$jedan['email'].'<br><br>
+							<div>Komentar:</div>'.$jedan['tekst'].'
+							</div>
+							';
+							}
 								
-						 		</div>';
+								echo '
+								</div>
+								<div>-------------------------------------------------------------</div>';?>
+								<form id="formaKomentara" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+								<?php
+								echo '<p>Dodajte vaš komentar:</p>
+								<input id = "id" name ="id" value = "'.$id.'" type = "hidden">
+								<p>Ime:</p>
+								<input type="text" name="autor" id="autor'.$id; echo '" class="input" placeholder="Unesite ime ovdje..."/>
+								<p>Email:</p>   
+								<input type="text" name="email" id="email'.$id; echo '" class="input" placeholder="Unesite email ovdje..."/>
+								<p>Komentar:</p>
+								<textarea name="poruka" id="poruka'.$id; echo '" class="input" rows="3" cols="30" placeholder="Unesite tekst ovdje..."></textarea>
+								
+								<button type="submit">Komentiraj</button>
+								<button type="reset">Ponisti</button>';?>
+								   </form>
+								<?php
+						 		echo '</div>';
 								
 								if($promjena==true)
 								{
@@ -278,9 +328,9 @@ $niz = array();
                 </div>
                 <div class="cleaner">&nbsp;</div>
             </div>
-					<?php 
+				<?php 
 						$promjena=true;
-					 	$ucitaniFajlovi = glob("Novosti/*.txt");
+					 	/*$ucitaniFajlovi = glob("Novosti/*.txt");
 						
 $niz = array();
 					 	foreach ($ucitaniFajlovi as $fajl) 
@@ -291,6 +341,45 @@ $niz = array();
 					 	}
 						//var_dump($niz);
 						
+						
+						function sortFunction( $a, $b ) {
+							
+							$date1=explode('.', $a[0]);
+							$date1[3]=trim($date1[3]);
+							$date2=explode('.', $b[0]);
+							$date2[3]=trim($date2[3]);
+							if($date1[2]==$date2[2])
+							{
+								if($date1[1]==$date2[1])
+								{
+									if($date1[0]==$date2[0])
+									{
+										if($date1[3]==$date2[3])
+										{
+											return 1;
+										}
+										else if($date1[3]<$date2[3])
+										{
+											return 1;
+										}
+										else return -1;
+									}
+									else if($date1[0]<$date2[0])
+									{
+										return 1;
+									}
+									else return -1;
+									
+								}
+								else if($date1[1]<$date2[1])
+								{
+									return 1;
+								}
+								else return -1;
+							}
+							
+							
+							}
 							
 							for($i=0;$i<count($ucitaniFajlovi)-1;$i++)
 							{
@@ -311,57 +400,51 @@ $niz = array();
 								
 								
 								
+							}*/
+							
+							$veza = new PDO("mysql:dbname=wt;host=localhost;charset=utf8", "wtuser", "wtpass");
+							$veza->exec("set names utf8");
+							$rezultat = $veza->query("select id, naslov, autor, tekst, opsirno, UNIX_TIMESTAMP(vrijeme) vrijeme2, slika from novosti order by vrijeme desc");
+							if (!$rezultat) {
+							$greska = $veza->errorInfo();
+							print "SQL greška: " . $greska[2];
+							exit();
 							}
+							
 						
 						$brojac2=false;
-					 	foreach ($ucitaniFajlovi as $file) 
+					 	foreach ($rezultat as $file) 
 					 	{
 							if($brojac2==false)
 							{
 								$brojac2=true;
 								continue;
 							}
+							$id = $file['id'];
+							
 							$opsirnije="";
-					 		$content = file($file);
-					 		$opisNovosti = "";
-					 		$detaljanOpisNovosti = "";
+					 		$opisNovosti = $file['tekst'];
+					 		$detaljanOpisNovosti = $file['opsirno'];
+							$bool = true;
+							if($detaljanOpisNovosti==null){
 					 		$bool = false;
+							}
 
-					 		for($i = 4; $i < count($content); $i++)
-					 		{
-					 			if($content[$i] === "--\r\n")
-					 			{
-					 				$bool = true;
-					 				continue;
-					 			}
-
-					 			if($bool == false)
-					 			{
-					 				$opisNovosti .= trim($content[$i]);
-					 			}
-					 			else if ($bool == true)
-					 			{
-					 				$detaljanOpisNovosti .= trim($content[$i]);
-					 			}
-					 		}
-
-					 		$dateTime = "";
-					 		$autorNovosti = "";
-					 		$naslovNovosti = "";
-					 		$slikaNovosti = "";
+					 		$dateTime = date("d.m.Y. H:i:s", $file['vrijeme2']);
+					 		$autorNovosti = $file['autor'];
+					 		$naslovNovosti = $file['naslov'];
+					 		$slikaNovosti = $file['slika'];
 
 							
-							
-					 		$dateTime = trim($content[0]);
-					 		$autorNovosti = trim($content[1]);
-					 		$naslovNovosti = trim(ucfirst(strtolower($content[2])));
-					 		$slikaNovosti = trim($content[3]);
 							
 					 		if($bool == true)
 					 		{
 								$opsirnije = "<a onclick=\"loadPage('detaljanprikaz.php?dateTime=$dateTime&autor=$autorNovosti&naslov=$naslovNovosti&opis=$opisNovosti&detOpis=$detaljanOpisNovosti&slika=$slikaNovosti');\" >Opsirnije...</a>";
 									
 					 		}
+							
+							$komentari = $veza->query("select id, novost,tekst, autor, UNIX_TIMESTAMP(vrijeme) vrijeme2, email from komentari where novost = '$id' order by vrijeme asc");
+							$brojKomentara = $komentari->rowCount();
 							
 					 		echo '<div class = "Ponuda">
 								  <h1> '.$naslovNovosti. '<span>(by '.$autorNovosti.')</span></h1>
@@ -373,10 +456,41 @@ $niz = array();
 								<div class="detaljnije">'.$opsirnije.'</div>
 								</div>
 								<div><p id="datumObjave">Datum objave: '.$dateTime.'</p></div>
+								<div>-------------------------------------------------------------</div>
+								<div id="paragraf" onclick="prikaziKomentar(\''; echo 'komentari'.$id; echo '\');">Broj komentara: '.$brojKomentara.'</div>
+								<div id="komentari'.$id.'" class="komentari">';
 								
-								<div class="cleaner">&nbsp;</div>
+							foreach($komentari as $jedan){
+							$sadasnjiDatum = date("d.m.Y. H:i:s", $jedan['vrijeme2']);
+							echo '
+							<div>-------------------------------------------------------------</div>
+							<div id="komentar'.$jedan['id']; echo '"class="komentar">
+							
+							<div>Datum objave: </div>'.$sadasnjiDatum.'<br><br> <div id="autor" class="autor">Autor: '.$jedan['autor'].'</div><br> <div id="mail'.$jedan['id']; echo '" class="mail">Email: </div>'.$jedan['email'].'<br><br>
+							<div>Komentar:</div>'.$jedan['tekst'].'
+							</div>
+							';
+							}
 								
-						 		</div>';
+								echo '
+								</div>
+								<div>-------------------------------------------------------------</div>';?>
+								<form id="formaKomentara" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+								<?php
+								echo '<p>Dodajte vaš komentar:</p>
+								<input id = "id" name ="id" value = "'.$id.'" type = "hidden">
+								<p>Ime:</p>
+								<input type="text" name="autor" id="autor'.$id; echo '" class="input" placeholder="Unesite ime ovdje..."/>
+								<p>Email:</p>   
+								<input type="text" name="email" id="email'.$id; echo '" class="input" placeholder="Unesite email ovdje..."/>
+								<p>Komentar:</p>
+								<textarea name="poruka" id="poruka'.$id; echo '" class="input" rows="3" cols="30" placeholder="Unesite tekst ovdje..."></textarea>
+								
+								<button type="submit">Komentiraj</button>
+								<button type="reset">Ponisti</button>';?>
+								   </form>
+								<?php
+						 		echo '</div>';
 								
 								if($promjena==true)
 								{
@@ -408,6 +522,7 @@ $niz = array();
 	</div>
 	<script type="text/javascript" src="prikaziMenu.js"></script>
 	<script type="text/javascript" src="ucitavanjeStranice.js"></script>
+	<script type="text/javascript" src="prikazKomentara.js"></script>
 </div> <!-- Kraj svega -->
 </BODY>
 </HTML>

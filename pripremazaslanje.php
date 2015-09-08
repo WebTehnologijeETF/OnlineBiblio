@@ -1,6 +1,6 @@
 <?php
     
-	      function test_input($data) 
+	function test_input($data) 
       {
     $data = trim($data);
     $data = stripslashes($data);
@@ -69,6 +69,25 @@
             </ul>
             <a href="#">Detaljnije...</a>
         </div>
+				<div id="login">
+		<?php 
+		session_start();
+		
+		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
+		?>
+
+		<a onclick="loadPage('odjava.php')">Odjavite se</a>
+		<?php
+		}
+		else{
+		?>
+		
+		<a onclick="loadPage('prijavaKorisnika.php')">Prijavite se</a>
+		
+		<?php
+		}
+		?>
+				</div>
 											<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
 		<a href="https://plus.google.com/u/0/" target="_blank"><img src="Slike/gmail.jpg" alt="image"></a>
@@ -123,6 +142,10 @@
             <p>Email: <?php echo $email?></p><br>
             <p>Poruka: <?php echo $poruka?></p><br>
 			<h2>Da li ste sigurni da želite poslati ove podatke?</h2>
+			<input type = "hidden" name = "imeSlanje" value = "<?php echo $ime; ?>">
+			<input type = "hidden" name = "prezimeSlanje" value = "<?php echo $prezime; ?>">
+			<input type = "hidden" name = "emailSlanje" value = "<?php echo $email; ?>">
+			<input type = "hidden" name = "porukaSlanje" value = "<?php echo $poruka; ?>">
 			
 			<input type="submit" value="Siguran sam"/>
 			</form>
