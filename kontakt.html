@@ -1,202 +1,3 @@
-<?php
-      
-    
-      $ime = "";
-	  $prezime = "";
-	  $email = "";
-	  $poruka = "";
-		$kod="";
-		$kod1="";
-		$errorIme="";
-		$errorEmail="";
-		$errorKod="";
-		$errorKod1="";
-		$errorPoruka="";
-		$dalje=0;
-			
-    
-      if($_SERVER["REQUEST_METHOD"] == "POST")
-      {
-             $dalje = 1;
-    
-          if(empty($_POST["ime"])){
-             $errorIme = '<style type="text/css">
-              #errorIme {
-              visibility: visible;
-              }
-			  #ime{
-				  border-color: red;
-			  }
-              </style>'; 
-              $dalje = 0; 
-          }
-          else{
-    
-               $ime = test_input($_POST["ime"]);
-               if(validateName($ime)){}
-               else
-               {
-                    $errorIme = '<style type="text/css">
-                    #errorIme {
-                    visibility: visible;
-                    }
-					#ime{
-				  border-color: red;
-						}
-                    </style>';  
-                     $dalje = 0; 
-               }
-          }
-    
-          if(empty($_POST["email"]))
-          {
-              $errorEmail = '<style type="text/css">
-              #errorEmail {
-              visibility: visible;
-              }
-			  #email
-			  {
-				  border-color: red;
-			  }
-              </style>';  
-               $dalje = 0; 
-          }
-          else{
-    
-               $email = test_input($_POST["email"]);
-              if(validateEmail($email)){
-    
-               }
-               else {
-                    $errorEmail = '<style type="text/css">
-                    #errorEmail {
-                    visibility: visible;
-                    }
-					#email
-					{
-						border-color: red;
-					}
-                    </style>'; 
-                     $dalje = 0; 
-               }
-          }
-		  
-		  if(empty($_POST["kod"]))
-          {
-              $errorKod = '<style type="text/css">
-              #errorKod {
-              visibility: visible;
-              }
-			  #kodslike
-			  {
-				  border-color: red;
-			  }
-              </style>';  
-               $dalje = 0; 
-          }
-          else{
-    
-               $kod = test_input($_POST["kod"]);
-              if(validateCode($kod)){
-               }
-               else {
-                    $errorKod = '<style type="text/css">
-                    #errorKod {
-                    visibility: visible;
-                    }
-					#kodslike
-					{
-						border-color: red;
-					}
-                    </style>'; 
-                     $dalje = 0; 
-               }
-          }
-		  
-		  
-		  if(empty($_POST["kod1"]))
-          {
-              $errorKod1 = '<style type="text/css">
-              #errorKod1 {
-              visibility: visible;
-              }
-			  #kodslike1
-			  {
-				  border-color: red;
-			  }
-              </style>';  
-               $dalje = 0; 
-          }
-          else{
-    
-               $kod1 = test_input($_POST["kod1"]);
-              if($kod==$kod1){
-    
-               }
-               else {
-                    $errorKod1 = '<style type="text/css">
-                    #errorKod1 {
-                    visibility: visible;
-                    }
-					#kodslike1
-					{
-						border-color: red;
-					}
-                    </style>'; 
-                     $dalje = 0; 
-               }
-          }
-		  
-		  
-    
-          if(empty($_POST["poruka"])){
-             $errorPoruka = '<style type="text/css">
-              #errorPoruka {
-              visibility: visible;
-              }
-              </style>';  
-               $dalje = 0; 
-          }
-          else{
-    
-               $poruka = test_input($_POST["poruka"]);
-          }
-		  
-	
-          }
-		  
-		  
-		 function test_input($data) 
-      {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-      }
-	  
-      function validateEmail($email){
-          if(filter_var($email, FILTER_VALIDATE_EMAIL)) return true;
-          else return false;
-      }
-    
-      function validateName($name){
-          if(preg_match("/^[a-zA-Z ]*$/",$name)) return true;
-          else return false;
-      }
-	  
-	  function validateCode($kod)
-	  {
-		  if( $kod == "aZ09AN11" )
-		  {
-			  return true;
-		  }
-		  else return false;
-	  }
-    
-
-    
-?>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -235,7 +36,7 @@
             <li><a onclick="loadPage('knjige.html')">Knjige</a></li>            
             <li><a onclick="loadPage('nova.html')">Nova izdanja</a></li>  
             <li><a onclick="loadPage('cjenovnik.html')">Cjenovnik</a></li> 
-            <li><a onclick="loadPage('kontakt.php')"  class="trenutna">Kontakt</a></li>
+            <li><a onclick="loadPage('kontakt.html')"  class="trenutna">Kontakt</a></li>
     	</ul>
     </div> <!-- Kraj menija -->
 	<div id="header">
@@ -253,23 +54,6 @@
             <a href="#">Detaljnije...</a>
         </div>
 		<div id="login">
-		<?php 
-		session_start();
-		
-		if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])){
-		?>
-		<a onclick="loadPage('adminpanel.php')">Admin Panel  </a>
-		<a onclick="loadPage('odjava.php')">Odjavite se</a>
-		<?php
-		}
-		else{
-		?>
-		
-		<a onclick="loadPage('prijavaKorisnika.php')">Prijavite se</a>
-		
-		<?php
-		}
-		?>
 				</div>
 											<div id="ex">
 		<a href="https://www.facebook.com/anes.luckin" target="_blank"><img src="Slike/fejs.jpg" alt="image"></a>
@@ -340,67 +124,44 @@
 		</p>
 		</div>
 		<div class="Forma"> 
-		<form name="KontaktForma" id="formavalidiranje" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+		<form name="KontaktForma" id="formavalidiranje" method="post">
 		<ul>
 		<li>Ime:</li>
 		<li>Mjesto:</li>
 		</ul><br>
-		<input type="text" name="ime" id="ime" class="input" value="<?php 
-										if(isset($_POST['ime']))
-                                       print $_POST['ime'];
-                                   ?>"/>
-								   <span><?php echo $errorIme ?></span>
+		<input type="text" name="ime" id="ime" class="input" value=""/>
 		<img id="errorIme" class="Greska" src="Slike/error.jpg" alt="image">
 		<input type="text" name="mjesto" id="mjesto" class="input" value="Ne morate unositi!"/>
 		<ul id="druginiz">
 		<li>Prezime:</li>
 		<li>Opcina:</li>
 		</ul><br>
-		<input type="text" name="prezime" id="prezime" class="input" value="<?php 
-										if(isset($_POST['prezime']))
-                                       print $_POST['prezime'];
-                                   ?>" />	
+		<input type="text" name="prezime" id="prezime" class="input" value="" />	
 		<input type="text" name="opcina" id="opcina" class="input" value="Ne morate unositi!" />		
 		<p>
-		E-mail:
+		Vas E-mail:
 		</p> 
-		<input type="text" name="email" id="email" class="input" value="<?php 
-										if(isset($_POST['email']))
-                                       print $_POST['email'];
-                                   ?>"/>
-								   <span><?php echo $errorEmail ?></span>
+		<input type="text" name="email" id="email" class="input" value=""/>
 		<img id="errorEmail" class="Greska" src="Slike/error.jpg" alt="image">
 		<p>
 		<img id="Kod" src="Slike/Kod.jpg" alt="image">
 		Unesite kod sa slike:
 		</p> 
-		<input type="text" name="kod" id="kodslike" class="input" value="<?php 
-										if(isset($_POST['kod']))
-                                       print $_POST['kod'];
-                                   ?>" />
-								   <span><?php echo $errorKod ?></span>
+		<input type="text" name="kod" id="kodslike" class="input" value="" />
 		<img id="errorKod" class="Greska" src="Slike/error.jpg" alt="image">
 		<p>
 		Ponovite kod:
 		</p>
-		<input type="text" name="kod1" id="kodslike1" class="input" value="<?php 
-										if(isset($_POST['kod1']))
-                                       print $_POST['kod1'];
-                                   ?>"/>
-								   <span><?php echo $errorKod1 ?></span>
+		<input type="text" name="kod1" id="kodslike1" class="input" value=""/>
 		<img id="errorKod1" class="Greska" src="Slike/error.jpg" alt="image">
 		<p>
 		Poruka:
 		</p> 
-		<textarea name="poruka" class="input" rows="4" cols="50"><?php 
-										if(isset($_POST['poruka']))
-                                       print $_POST['poruka'];
-                                   ?></textarea>
-								   <span><?php echo $errorPoruka ?></span>
+		<textarea name="poruka" id="poruka" class="input" rows="4" cols="50"></textarea>
 		<img id="errorPoruka" class="Greska" src="Slike/error.jpg" alt="image" />	
 		<br>
 		<br>
-		<input type="submit" value="Posalji"/> <!--onclick="validirajFormu();"--> 
+		<input type="button"  value="Posalji" onclick="validirajFormu();" /> 
 		<input type="reset" value="Ponisti"/>  <!--onclick="obrisiInput();"-->
 		</form>
 		</div>
@@ -410,22 +171,11 @@
 	       <a href="index.php">Početna</a> | <a href="#">Pretraga</a> | <a href="knjige.html">Knjige</a> | <a href="nova.html">Nova izdanja</a> | <a href="https://www.facebook.com/anes.luckin" target="_blank">Kompanija</a> | <a href="kontakt.html">Kontakt</a><br />
         Copyright © 2015 <a href="#"><strong>OnlineBiblio</strong></a> 
 	</div>
+<script type="text/javascript" src="Javascript/validacijaForme.js" ></script>
 <script type="text/javascript" src="prikaziMenu.js" ></script>
 <script type="text/javascript" src="ponisti.js" ></script>
 <script src="ucitavanjeStranice.js"></script>
 </div> <!-- Kraj svega -->
 </BODY>
 </HTML>
-
-<?php
-
-		  	if($dalje){
-			echo "
-             <script type=\"text/javascript\">
-           var e = document.getElementById('formavalidiranje'); e.action='pripremazaslanje.php'; e.submit();
-           </script>
-           ";
-          } 
-
-?>
 
